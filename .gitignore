@@ -1,0 +1,9 @@
+# Ignore binary files
+Build/
+Dist/
+
+# Ignore Visual Studio session files
+ipch/
+*.sdf
+*.opensdf
+*.suo
