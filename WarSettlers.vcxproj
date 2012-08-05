@@ -155,6 +155,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Code\main.cpp" />
+    <ClCompile Include="Code\WindowsInput.cpp" />
+    <ClCompile Include="Code\WindowsSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Code\WindowsInput.h" />
+    <ClInclude Include="Code\WindowsSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

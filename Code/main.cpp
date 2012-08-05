@@ -1,8 +1,22 @@
 #include <Windows.h>
 
+#include "WindowsSystem.h"; 
+
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int showState)
 {
-	MessageBox(NULL, "Compilation complete", "Success", MB_OK | MB_ICONINFORMATION);
+	bool windowsInitResult = false; 	
+	WindowsSystem* system; 
+
+	system = new WindowsSystem(); 
+	windowsInitResult = system->Init(); 
+
+	if(windowsInitResult) 
+	{
+		system->Run(); 
+	}
+
+	system->Shutdown(); 
+	delete system; 
 
 	return 0;
 }
