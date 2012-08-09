@@ -69,6 +69,8 @@ namespace Framework
 		SafeRelease(m_resource);
 
 		m_resource = resource;
+
+		return *this;
 	}
 
 	template <typename T>
@@ -81,6 +83,8 @@ namespace Framework
 			m_resource = copy.m_resource;
 			m_resource->AddRef();
 		}
+
+		return *this;
 	}
 
 	template <typename T>

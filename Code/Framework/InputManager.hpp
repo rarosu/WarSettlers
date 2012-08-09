@@ -32,7 +32,7 @@ namespace Framework
 			bool m_keys[256];
 
 			Keyboard();
-		} Keyboard;
+		} m_keyboard;
 
 		struct Mouse
 		{
@@ -41,7 +41,7 @@ namespace Framework
 			bool m_buttons[Button::Count];
 
 			Mouse();
-		} Mouse;
+		} m_mouse;
 	};
 
 
@@ -55,8 +55,8 @@ namespace Framework
 		virtual void KeyReleased(int keyCode) {}
 		virtual void CharEntered(char character) {}
 		virtual void MouseMoved(unsigned int x, unsigned int y, int dx, int dy) {}
-		virtual void ButtonPressed(Framework::Button::Button button) {}
-		virtual void ButtonReleased(Framework::Button::Button button) {}
+		virtual void ButtonPressed(Framework::Button::Button button, unsigned int x, unsigned int y) {}
+		virtual void ButtonReleased(Framework::Button::Button button, unsigned int x, unsigned int y) {}
 	};
 
 

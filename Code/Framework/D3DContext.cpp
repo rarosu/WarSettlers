@@ -1,7 +1,6 @@
 #include "D3DContext.hpp"
 
 #include "Global.hpp"
-#include "Window.hpp"
 #include <Libs\r2tk\r2-exception.hpp>
 #include <Libs\r2tk\r2-assert.hpp>
 
@@ -21,18 +20,9 @@ namespace Framework
 		, m_height(height)
 	{}
 
-	D3DContext::Description::Buffer::Buffer()
-		: m_width(0)
-		, m_height(0)
-	{}
-
-	D3DContext::Description::Buffer::Buffer(unsigned int width, unsigned int height)
-		: m_width(width)
-		, m_height(height)
-	{}
-
 	D3DContext::Description::Description()
 		: m_fullscreen(false)
+		, m_vsync(false)
 	{}
 
 
@@ -40,10 +30,12 @@ namespace Framework
 	D3DContext::D3DContext(Window* targetWindow, const Description& description)
 		: m_targetWindow(targetWindow)
 		, m_activeViewport(0)
+		, m_displayMode(description.m_displayMode)
+		, m_vsync(description.m_vsync)
 	{
 		HRESULT result = S_OK;
 
-		result = CreateDeviceAndSwapChain(description);
+		result = CreateDeviceAndSwapChain(description.m_displayMode, description.m_fullscreen, description.m_vsync);
 		if (FAILED(result))
 			throw r2ExceptionRuntimeM("Failed to create device and swap chain");
 
@@ -51,7 +43,7 @@ namespace Framework
 		if (FAILED(result))
 			throw r2ExceptionRuntimeM("Failed to create back buffer view");
 
-		result = CreateDepthStencilBuffer(description.m_depthBuffer);
+		result = CreateDepthStencilBuffer(description.m_displayMode);
 		if (FAILED(result))
 			throw r2ExceptionRuntimeM("Failed to create depth stencil buffer/view");
 
@@ -104,6 +96,105 @@ namespace Framework
 	}
 
 
+	const D3D11_TEXTURE2D_DESC& D3DContext::GetBackBufferDescription() const
+	{
+		return m_backBufferDescription;
+	}
+
+	const D3D11_TEXTURE2D_DESC& D3DContext::GetDepthStencilBufferDescription() const
+	{
+		return m_depthStencilBufferDescription;
+	}
+
+	bool D3DContext::IsFullscreen()
+	{
+		BOOL fullscreen;
+		if (FAILED(m_swapChain->GetFullscreenState(&fullscreen, NULL)))
+			throw r2ExceptionRuntimeM("Failed to query fullscreen state");
+
+		return fullscreen == TRUE;
+	}
+
+	bool D3DContext::IsVSyncEnabled() const
+	{
+		return m_vsync;
+	}
+
+
+	bool D3DContext::ChangeResolution(const DisplayMode& displayMode, bool fullscreen, bool vsync)
+	{
+		// Release buffers relying on the back buffer and the swap chain
+		m_backBufferView = NULL;
+		m_depthStencilView = NULL;
+		m_depthStencilBuffer = NULL;
+
+		// Change resolution (or the size of the target window, if windowed)
+		DXGI_MODE_DESC modeDescription;
+		modeDescription.Width = displayMode.m_description.Width;
+		modeDescription.Height = displayMode.m_description.Height;
+		modeDescription.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+
+		if (vsync)
+		{
+			modeDescription.RefreshRate.Numerator = displayMode.m_description.RefreshRate.Numerator;
+			modeDescription.RefreshRate.Denominator = displayMode.m_description.RefreshRate.Denominator;
+		}
+		else
+		{
+			modeDescription.RefreshRate.Numerator = 0;
+			modeDescription.RefreshRate.Denominator = 1;
+		}
+		
+		modeDescription.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+		modeDescription.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+
+		// Change the resolution and update fields
+		if (FAILED(m_swapChain->ResizeTarget(&modeDescription)))
+			return false;
+		if (FAILED(m_swapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH)))
+			return false;
+		m_displayMode = displayMode;
+		m_vsync = vsync;
+
+		// Handle fullscreen switch
+		if (IsFullscreen() != fullscreen)
+		{
+			if (FAILED(m_swapChain->SetFullscreenState(fullscreen, NULL)))
+				return false;
+
+			// To prevent flickering, call resize target again with refresh rate members zeroed out.
+			modeDescription.RefreshRate.Numerator = 0;
+			modeDescription.RefreshRate.Denominator = 0;
+
+			if (FAILED(m_swapChain->ResizeTarget(&modeDescription)))
+				return false;
+		}
+
+		// Recreate the back buffer view
+		if (FAILED(CreateBackBufferView()))
+			return false;
+
+		// Recreate the depth stencil view
+		if (FAILED(CreateDepthStencilBuffer(displayMode)))
+			return false;
+
+		// TODO: Update the viewport dimensions
+
+		return true;
+	}
+
+	bool D3DContext::ToggleFullscreen()
+	{
+		return ChangeResolution(m_displayMode, !IsFullscreen(), m_vsync);
+	}
+
+	bool D3DContext::ToggleVSync()
+	{
+		return ChangeResolution(m_displayMode, IsFullscreen(), !m_vsync);
+	}
+
+
+
 	void D3DContext::Clear(const D3DXCOLOR& color)
 	{
 		m_deviceContext->ClearRenderTargetView(m_backBufferView.Resource(), (const FLOAT*)color);
@@ -112,11 +203,20 @@ namespace Framework
 
 	void D3DContext::SwapBuffers()
 	{
-		m_swapChain->Present(0, 0);
+		if (m_vsync)
+			m_swapChain->Present(1, 0);
+		else
+			m_swapChain->Present(0, 0);
 	}
 
 
-	HRESULT D3DContext::CreateDeviceAndSwapChain(Description description)
+	void D3DContext::WindowResized(unsigned int clientWidth, unsigned int clientHeight, unsigned int windowWidth, unsigned int windowHeight)
+	{
+
+	}
+
+
+	HRESULT D3DContext::CreateDeviceAndSwapChain(const DisplayMode& displayMode, bool fullscreen, bool vsync)
 	{
 		unsigned int deviceFlags = 0;
 
@@ -124,25 +224,34 @@ namespace Framework
 		deviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
-		// Set the back buffer size to the window's client size, if the size of it is 0.
-		description.m_backBuffer.m_width = (description.m_backBuffer.m_width == 0) ? m_targetWindow->GetClientWidth() : description.m_backBuffer.m_width;
-		description.m_backBuffer.m_height = (description.m_backBuffer.m_height == 0) ? m_targetWindow->GetClientHeight() : description.m_backBuffer.m_height;
 
 		// Create the swap chain description
 		DXGI_SWAP_CHAIN_DESC scDescription;
 		ZeroMemory(&scDescription, sizeof(scDescription));
-
+		
 		scDescription.BufferCount = 1;
-		scDescription.BufferDesc.Width = description.m_backBuffer.m_width;
-		scDescription.BufferDesc.Height = description.m_backBuffer.m_height;
+		scDescription.BufferDesc.Width = displayMode.m_description.Width;
+		scDescription.BufferDesc.Height = displayMode.m_description.Height;
 		scDescription.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		scDescription.BufferDesc.RefreshRate.Numerator = 60;
-		scDescription.BufferDesc.RefreshRate.Denominator = 1;
+
+		if (vsync)
+		{
+			scDescription.BufferDesc.RefreshRate.Numerator = displayMode.m_description.RefreshRate.Numerator;
+			scDescription.BufferDesc.RefreshRate.Denominator = displayMode.m_description.RefreshRate.Denominator;
+		}
+		else
+		{
+			scDescription.BufferDesc.RefreshRate.Numerator = 0;
+			scDescription.BufferDesc.RefreshRate.Denominator = 1;
+		}
+		
 		scDescription.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		scDescription.OutputWindow = m_targetWindow->GetHandle();
 		scDescription.SampleDesc.Count = 1;
 		scDescription.SampleDesc.Quality = 0;
-		scDescription.Windowed = !description.m_fullscreen;
+		scDescription.Windowed = !fullscreen;
+		scDescription.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+		
 
 		// List the different Direct3D driver types. We'll try to render using hardware first, and only using the
 		// reference driver if that fails.
@@ -175,8 +284,6 @@ namespace Framework
 		if (FAILED(result))
 			return result;
 
-		m_backBufferDescription = description.m_backBuffer;
-
 		return S_OK;
 	}
 
@@ -185,34 +292,32 @@ namespace Framework
 		HRESULT result = S_OK;
 		COMResource<ID3D11Texture2D> backBuffer;
 
+		// Get a reference to the back buffer from the swap chain
 		result = m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)(&backBuffer.Resource()));
 		if (FAILED(result))
 			return result;
 
+		// Create a view to the back buffer texture
 		result = m_device->CreateRenderTargetView(backBuffer.Resource(), NULL, &m_backBufferView.Resource());
 		if (FAILED(result))
 			return result;
 
+		// Store the description of the back buffer
+		backBuffer->GetDesc(&m_backBufferDescription);
+
 		return result;
 	}
 
-	HRESULT D3DContext::CreateDepthStencilBuffer(Description::Buffer description)
+	HRESULT D3DContext::CreateDepthStencilBuffer(const DisplayMode& displayMode)
 	{
 		HRESULT result = S_OK;
-
-		// If the size of the depth/stencil description is 0, set it to the same as the back buffer.
-		description.m_width = (description.m_width == 0) ? m_backBufferDescription.m_width : description.m_width;
-		description.m_height = (description.m_height == 0) ? m_backBufferDescription.m_height : description.m_height;
-
-		r2AssertM(description.m_width >= m_backBufferDescription.m_width, "Invalid depth/stencil size");
-		r2AssertM(description.m_height >= m_backBufferDescription.m_height, "Invalid depth/stencil size");
 
 		// Create depth stencil texture
 		D3D11_TEXTURE2D_DESC depthTextureDescription;
 		ZeroMemory(&depthTextureDescription, sizeof(depthTextureDescription));
 
-		depthTextureDescription.Width = description.m_width;
-		depthTextureDescription.Height = description.m_height;
+		depthTextureDescription.Width = displayMode.m_description.Width;
+		depthTextureDescription.Height = displayMode.m_description.Height;
 		depthTextureDescription.MipLevels = 1;
 		depthTextureDescription.ArraySize = 1;
 		depthTextureDescription.Format = DXGI_FORMAT_D32_FLOAT;
@@ -239,8 +344,8 @@ namespace Framework
 		if (FAILED(result))
 			return result;
 
-		m_depthStencilBufferDescription.m_width = description.m_width;
-		m_depthStencilBufferDescription.m_height = description.m_height;
+		// Store the description of the buffer
+		m_depthStencilBuffer->GetDesc(&m_depthStencilBufferDescription);
 
 		return result;
 	}

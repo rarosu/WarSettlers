@@ -6,6 +6,8 @@
 #include "WinInclude.hpp"
 #include "D3DInclude.hpp"
 #include "COMResource.hpp"
+#include "Window.hpp"
+#include "DisplayCapabilities.hpp"
 #include <Libs\r2tk\r2-singleton.hpp>
 
 namespace Framework
@@ -20,7 +22,7 @@ namespace Framework
 		the swap chain and the back buffer, the depth/stencil buffer and
 		the viewports.
 	*/
-	class D3DContext : public r2::Singleton<D3DContext>
+	class D3DContext : public r2::Singleton<D3DContext>, public WindowEventListener
 	{
 	public:
 		/**
@@ -43,23 +45,14 @@ namespace Framework
 		*/
 		struct Description
 		{
-			struct Buffer
-			{
-				unsigned int m_width;
-				unsigned int m_height;
-
-				Buffer();
-				Buffer(unsigned int width, unsigned int height);
-			};
+			// The display mode to start the application in (resolution, refresh rate, etc.)
+			DisplayMode m_displayMode;
 
 			// Determines if the application should start in fullscreen
 			bool m_fullscreen;
-			
-			// The description of the back buffer. Set width or height to 0 to make it the same size as the target window.
-			Buffer m_backBuffer;
 
-			// The description of the depth buffer. Set width or height to 0 to make it the same size as the back buffer.
-			Buffer m_depthBuffer;
+			// Determines if we're using vsync (using monitor's refresh rate).
+			bool m_vsync;
 
 			// The viewports used to render to.
 			std::vector<Viewport> m_viewports;
@@ -73,11 +66,34 @@ namespace Framework
 		~D3DContext() throw();
 
 
-		// Viewport management
+		// Viewport management.
 		const std::vector<Viewport> GetViewports() const;
 		void SetViewports(const std::vector<Viewport>& viewports);
 		void SetActiveViewport(unsigned int index);
 		unsigned int GetActiveViewport() const;
+
+
+		// Get metadata about the back buffer.
+		const D3D11_TEXTURE2D_DESC& GetBackBufferDescription() const;
+
+		// Get metadata about the depth-stencil buffer.
+		const D3D11_TEXTURE2D_DESC& GetDepthStencilBufferDescription() const;
+
+		// Return whether we're in fullscreen mode or not.
+		bool IsFullscreen();
+
+		// Return whether VSync is enabled or not.
+		bool IsVSyncEnabled() const;
+
+
+		// Change the display mode, and whether we should be in fullscreen or using vsync.
+		bool ChangeResolution(const DisplayMode& displayMode, bool fullscreen, bool vsync);
+
+		// Toggle fullscreen mode.
+		bool ToggleFullscreen();
+
+		// Toggle vsync mode.
+		bool ToggleVSync();
 
 
 		// Clear the back buffer with the specified color, clear depth buffer to 1.0
@@ -86,28 +102,35 @@ namespace Framework
 
 		// Swap the back- and front buffer.
 		void SwapBuffers();
+
+
+		// Interface: WindowEventListener
+		void WindowResized(unsigned int clientWidth, unsigned int clientHeight, unsigned int windowWidth, unsigned int windowHeight);
 	private:
 		Window* m_targetWindow;
 
 		COMResource<ID3D11Device> m_device;
 		COMResource<ID3D11DeviceContext> m_deviceContext;
 		COMResource<IDXGISwapChain> m_swapChain;
+		COMResource<IDXGIAdapter> m_adapter;
 
 		COMResource<ID3D11RenderTargetView> m_backBufferView;
 		COMResource<ID3D11Texture2D> m_depthStencilBuffer;
 		COMResource<ID3D11DepthStencilView> m_depthStencilView;
 
-		Description::Buffer m_backBufferDescription;
-		Description::Buffer m_depthStencilBufferDescription;
+		DisplayMode m_displayMode;
+		bool m_vsync;
+		D3D11_TEXTURE2D_DESC m_backBufferDescription;
+		D3D11_TEXTURE2D_DESC m_depthStencilBufferDescription;
 
 		std::vector<Viewport> m_viewports;
 		unsigned int m_activeViewport;
 
 
 		// Methods for setting up D3D11
-		HRESULT CreateDeviceAndSwapChain(Description description);
+		HRESULT CreateDeviceAndSwapChain(const DisplayMode& displayMode, bool fullscreen, bool vsync);
 		HRESULT CreateBackBufferView();
-		HRESULT CreateDepthStencilBuffer(Description::Buffer description);
+		HRESULT CreateDepthStencilBuffer(const DisplayMode& displayMode);
 	};
 }
 

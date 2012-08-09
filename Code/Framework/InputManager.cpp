@@ -59,7 +59,7 @@ namespace Framework
 
 	void InputManager::HandleKeyDownMessage(WPARAM wParam, LPARAM lParam)
 	{
-		m_currentInput.Keyboard.m_keys[wParam] = true;
+		m_currentInput.m_keyboard.m_keys[wParam] = true;
 		for (size_t i = 0; i < m_inputListeners.size(); ++i)
 		{
 			m_inputListeners[i]->KeyPressed(static_cast<int>(wParam));
@@ -68,7 +68,7 @@ namespace Framework
 
 	void InputManager::HandleKeyUpMessage(WPARAM wParam, LPARAM lParam)
 	{
-		m_currentInput.Keyboard.m_keys[wParam] = false;
+		m_currentInput.m_keyboard.m_keys[wParam] = false;
 		for (size_t i = 0; i < m_inputListeners.size(); ++i)
 		{
 			m_inputListeners[i]->KeyReleased(static_cast<int>(wParam));
@@ -85,33 +85,33 @@ namespace Framework
 
 	void InputManager::HandleButtonDownMessage(Button::Button button, LPARAM lParam)
 	{
-		m_currentInput.Mouse.m_buttons[button] = true;
+		m_currentInput.m_mouse.m_buttons[button] = true;
 		for (size_t i = 0; i < m_inputListeners.size(); ++i)
 		{
-			m_inputListeners[i]->ButtonPressed(button);
+			m_inputListeners[i]->ButtonPressed(button, LOWORD(lParam), HIWORD(lParam));
 		}
 	}
 
 	void InputManager::HandleButtonUpMessage(Button::Button button, LPARAM lParam)
 	{
-		m_currentInput.Mouse.m_buttons[button] = false;
+		m_currentInput.m_mouse.m_buttons[button] = false;
 		for (size_t i = 0; i < m_inputListeners.size(); ++i)
 		{
-			m_inputListeners[i]->ButtonReleased(button);
+			m_inputListeners[i]->ButtonReleased(button, LOWORD(lParam), HIWORD(lParam));
 		}
 	}
 
 	void InputManager::HandleMouseMoveMessage(WPARAM wParam, LPARAM lParam)
 	{
-		m_currentInput.Mouse.m_x = LOWORD(lParam);
-		m_currentInput.Mouse.m_y = HIWORD(lParam);
+		m_currentInput.m_mouse.m_x = LOWORD(lParam);
+		m_currentInput.m_mouse.m_y = HIWORD(lParam);
 
 		for (size_t i = 0; i < m_inputListeners.size(); ++i)
 		{
-			m_inputListeners[i]->MouseMoved(m_currentInput.Mouse.m_x, 
-				m_currentInput.Mouse.m_y,
-				static_cast<int>(m_currentInput.Mouse.m_x) - static_cast<int>(m_previousInput.Mouse.m_x),
-				static_cast<int>(m_currentInput.Mouse.m_y) - static_cast<int>(m_previousInput.Mouse.m_y));
+			m_inputListeners[i]->MouseMoved(m_currentInput.m_mouse.m_x, 
+				m_currentInput.m_mouse.m_y,
+				static_cast<int>(m_currentInput.m_mouse.m_x) - static_cast<int>(m_previousInput.m_mouse.m_x),
+				static_cast<int>(m_currentInput.m_mouse.m_y) - static_cast<int>(m_previousInput.m_mouse.m_y));
 		}
 	}
 

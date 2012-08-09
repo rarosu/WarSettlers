@@ -39,6 +39,9 @@
     <ClCompile Include="Code\Framework\D3DContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Code\Framework\DisplayCapabilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\WindowsSystem.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Code\Framework\Global.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Framework\DisplayCapabilities.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
