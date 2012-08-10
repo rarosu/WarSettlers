@@ -3,6 +3,7 @@
 
 #include "Window.hpp"
 #include "D3DWrapper.hpp"
+#include <Utility\Logger.hpp>
 
 namespace Framework
 {
@@ -51,6 +52,8 @@ namespace Framework
 		virtual void Render(float dt, float interpolation) = 0;
 	private:
 		bool m_running;
+
+		Utility::Logger m_logger;
 		Window m_window;
 		D3DWrapper m_d3d;
 

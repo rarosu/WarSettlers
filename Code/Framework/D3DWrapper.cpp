@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include "Global.hpp"
+#include <Utility\Logger.hpp>
 
 namespace Framework
 {
@@ -151,9 +152,7 @@ namespace Framework
 	void D3DWrapper::WindowResized(unsigned int clientWidth, unsigned int clientHeight, unsigned int windowWidth, unsigned int windowHeight)
 	{
 		// Output debug information
-		std::stringstream modeString;
-		modeString << "Resize: " << clientWidth << " x " << clientHeight << "\n";
-		OutputDebugString(modeString.str().c_str());
+		Utility::Logger::Instance().D("Resize: %u x %u\n", clientWidth, clientHeight);
 
 		// Release references to resources
 		m_backBufferView = NULL;
@@ -330,7 +329,7 @@ namespace Framework
 			viewports[i].MaxDepth = 1.0f;
 		}
 
-		m_deviceContext->RSSetViewports(viewports.size(), &viewports[0]);
+		m_deviceContext->RSSetViewports(static_cast<UINT>(viewports.size()), &viewports[0]);
 	}
 
 }

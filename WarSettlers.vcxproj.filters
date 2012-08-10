@@ -51,6 +51,9 @@
     <ClCompile Include="Code\WarSettlers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Code\Utility\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\WindowsSystem.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Code\WarSettlers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Utility\Logger.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

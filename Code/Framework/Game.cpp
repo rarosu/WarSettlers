@@ -4,6 +4,7 @@ namespace Framework
 {
 	Game::Game(HINSTANCE m_instance, const Description& description)
 		: m_running(true)
+		, m_logger("WarSettlers.log")
 		, m_window(m_instance, description.m_windowDescription)
 		, m_d3d(&m_window, description.m_d3dDescription)
 	{}

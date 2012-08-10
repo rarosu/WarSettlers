@@ -163,6 +163,7 @@
     <ClCompile Include="Code\Libs\r2tk\r2-assert.cpp" />
     <ClCompile Include="Code\Libs\r2tk\r2-exception.cpp" />
     <ClCompile Include="Code\main.cpp" />
+    <ClCompile Include="Code\Utility\Logger.cpp" />
     <ClCompile Include="Code\WarSettlers.cpp" />
     <ClCompile Include="Code\WindowsInput.cpp" />
     <ClCompile Include="Code\WindowsSystem.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Code\Libs\r2tk\r2-exception.hpp" />
     <ClInclude Include="Code\Libs\r2tk\r2-global.hpp" />
     <ClInclude Include="Code\Libs\r2tk\r2-singleton.hpp" />
+    <ClInclude Include="Code\Utility\Logger.hpp" />
     <ClInclude Include="Code\WarSettlers.hpp" />
     <ClInclude Include="Code\WindowsInput.h" />
     <ClInclude Include="Code\WindowsSystem.h" />

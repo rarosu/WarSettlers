@@ -7,3 +7,6 @@ ipch/
 *.sdf
 *.opensdf
 *.suo
+
+# Ignore log files
+*.log
