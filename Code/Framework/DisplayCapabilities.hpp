@@ -11,8 +11,9 @@ namespace Framework
 	*/
 	struct DisplayMode
 	{
-		DXGI_MODE_DESC m_description;
-
+		unsigned int m_width;
+		unsigned int m_height;
+		DXGI_RATIONAL m_refreshRate;
 
 		DisplayMode();
 

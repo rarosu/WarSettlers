@@ -9,20 +9,21 @@
 namespace Framework
 {
 	DisplayMode::DisplayMode()
+		: m_width(640)
+		, m_height(480)
 	{
-		m_description.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		m_description.Width = 800;
-		m_description.Height = 600;
-		m_description.RefreshRate.Numerator = 60;
-		m_description.RefreshRate.Denominator = 1;
-		m_description.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-		m_description.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+		m_refreshRate.Numerator = 60;
+		m_refreshRate.Denominator = 1;
 	}
 
 
 	bool DisplayMode::operator==(const DisplayMode& rhs) const
 	{
-		return memcmp(&m_description, &rhs.m_description, sizeof(DXGI_MODE_DESC)) == 0;
+		// Refresh rate is assumed to be in most simplified form
+		return m_width == rhs.m_width &&
+			m_height == rhs.m_height &&
+			m_refreshRate.Numerator == rhs.m_refreshRate.Numerator &&
+			m_refreshRate.Denominator == rhs.m_refreshRate.Denominator;
 	}
 
 	bool DisplayMode::operator!=(const DisplayMode& rhs) const
@@ -32,7 +33,7 @@ namespace Framework
 
 	bool DisplayMode::operator<(const DisplayMode& rhs) const
 	{
-		return m_description.Width < rhs.m_description.Width;
+		return m_width < rhs.m_width;
 	}
 
 	bool DisplayMode::operator<=(const DisplayMode& rhs) const
@@ -42,8 +43,7 @@ namespace Framework
 
 	bool DisplayMode::operator>(const DisplayMode& rhs) const
 	{
-		return m_description.Width > rhs.m_description.Width;
-		//return !((*this) <= rhs);
+		return m_width > rhs.m_width;
 	}
 
 	bool DisplayMode::operator>=(const DisplayMode& rhs) const
@@ -103,7 +103,9 @@ namespace Framework
 		m_displayModes.resize(displayModeCount);
 		for (size_t i = 0; i < displayModeCount; ++i)
 		{
-			m_displayModes[i].m_description = displayModes[i];
+			m_displayModes[i].m_width = displayModes[i].Width;
+			m_displayModes[i].m_height = displayModes[i].Height;
+			m_displayModes[i].m_refreshRate = displayModes[i].RefreshRate;
 		}
 
 		// Sort the list if requested

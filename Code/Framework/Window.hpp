@@ -18,6 +18,7 @@ namespace Framework
 		virtual void WindowResized(unsigned int clientWidth, unsigned int clientHeight, unsigned int windowWidth, unsigned int windowHeight) {}
 	};
 
+
 	/**
 		Manages a basic window and its events. Designed to work
 		as a rendering surface.
@@ -54,10 +55,15 @@ namespace Framework
 			Description();
 		};
 
-
+		/**
+			Constructor
+		*/
 		Window(HINSTANCE instance, const Description& description);
 		
 
+		/**
+			Get basic information about the window
+		*/
 		unsigned int GetWindowWidth() const;
 		unsigned int GetWindowHeight() const;
 		unsigned int GetClientWidth() const;
@@ -66,14 +72,20 @@ namespace Framework
 		HINSTANCE GetInstance() const;
 
 
-		// Process all messages in the message queue.
+		/**
+			Process all messages in the message queue.
+		*/
 		bool ProcessMessages();
 
-		// Get the value the application exited with. Returns 0 on a good day, or
-		// if the window hasn't been destroyed yet.
+		/**
+			Get the value the application exited with. Returns 0 on a good day, or
+			if the window hasn't been destroyed yet.
+		*/
 		int GetExitValue();
 
-		// Add/Remove window event listeners
+		/** 
+			Add/Remove window event listeners
+		*/
 		void AddEventListener(WindowEventListener* listener);
 		void RemoveEventListener(WindowEventListener* listener);
 		bool IsEventListener(WindowEventListener* listener) const;
@@ -88,14 +100,20 @@ namespace Framework
 		std::vector<WindowEventListener*> m_eventListeners;
 
 		
-		// Static WndProc. Forwards every message to the window class.
+		/** 
+			Static WndProc. Forwards every message to the window class.
+		*/
 		static LRESULT CALLBACK WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
 
-		// Methods for creating a window from a description.
+		/** 
+			Methods for creating a window from a description.
+		*/
 		bool SetupClass(const Description& description);
 		bool SetupWindow(const Description& description);
 
-		// Methods for handling messages from the WndProc.
+		/**
+			Methods for handling messages from the WndProc.
+		*/
 		bool HandleWindowMessage(UINT message, WPARAM wParam, LPARAM lParam);
 		void HandleSizeMessage();
 	};

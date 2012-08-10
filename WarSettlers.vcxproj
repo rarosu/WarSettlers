@@ -154,21 +154,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Code\Framework\D3DContext.cpp" />
+    <ClCompile Include="Code\Framework\D3DWrapper.cpp" />
+    <ClCompile Include="Code\Framework\D3DInclude.cpp" />
     <ClCompile Include="Code\Framework\DisplayCapabilities.cpp" />
+    <ClCompile Include="Code\Framework\Game.cpp" />
     <ClCompile Include="Code\Framework\InputManager.cpp" />
     <ClCompile Include="Code\Framework\Window.cpp" />
     <ClCompile Include="Code\Libs\r2tk\r2-assert.cpp" />
     <ClCompile Include="Code\Libs\r2tk\r2-exception.cpp" />
     <ClCompile Include="Code\main.cpp" />
+    <ClCompile Include="Code\WarSettlers.cpp" />
     <ClCompile Include="Code\WindowsInput.cpp" />
     <ClCompile Include="Code\WindowsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Framework\COMResource.hpp" />
-    <ClInclude Include="Code\Framework\D3DContext.hpp" />
+    <ClInclude Include="Code\Framework\D3DWrapper.hpp" />
     <ClInclude Include="Code\Framework\D3DInclude.hpp" />
     <ClInclude Include="Code\Framework\DisplayCapabilities.hpp" />
+    <ClInclude Include="Code\Framework\Game.hpp" />
     <ClInclude Include="Code\Framework\Global.hpp" />
     <ClInclude Include="Code\Framework\InputManager.hpp" />
     <ClInclude Include="Code\Framework\Window.hpp" />
@@ -177,6 +181,7 @@
     <ClInclude Include="Code\Libs\r2tk\r2-exception.hpp" />
     <ClInclude Include="Code\Libs\r2tk\r2-global.hpp" />
     <ClInclude Include="Code\Libs\r2tk\r2-singleton.hpp" />
+    <ClInclude Include="Code\WarSettlers.hpp" />
     <ClInclude Include="Code\WindowsInput.h" />
     <ClInclude Include="Code\WindowsSystem.h" />
   </ItemGroup>

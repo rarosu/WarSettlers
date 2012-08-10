@@ -27,7 +27,8 @@
  * Depends on: 
  *
  * Updates:
- * 
+ *	2012-08-10 (Rarosu) - Removed assert from InstancePtr(). Might want to check if instance has been created by
+ *		comparing it to NULL.
  */
 
 #ifndef R2_SINGLETON_HPP
@@ -127,7 +128,7 @@ namespace r2 {
 
 	template <typename T>
 	T* Singleton<T>::InstancePtr() {
-		r2AssertM(s_instance != NULL, "Singleton has not been created yet");
+		//r2AssertM(s_instance != NULL, "Singleton has not been created yet");
 
 		return s_instance;
 	}
@@ -184,7 +185,7 @@ namespace r2 {
 
 	template <typename T>
 	const T* SingletonConst<T>::InstancePtr() {
-		r2AssertM(s_instance != NULL, "Singleton has not been created yet");
+		//r2AssertM(s_instance != NULL, "Singleton has not been created yet");
 
 		return s_instance;
 	}

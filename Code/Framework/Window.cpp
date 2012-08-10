@@ -11,7 +11,7 @@ namespace Framework
 		, m_y(-1)
 		, m_clientWidth(640)
 		, m_clientHeight(480)
-		, m_caption("Unnamed Application")
+		, m_caption("Untitled Application")
 		, m_resizable(true)
 		, m_hasFrame(true)
 	{}
