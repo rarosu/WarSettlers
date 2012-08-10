@@ -1,0 +1,34 @@
+CODE STANDARD
+
+Namespaces:
+	* If a file is in a folder, it will have the same namespace:
+		Framework/Global.hpp
+	will have namespace:
+		Framework
+	
+	* If a file is in a namespace, its inclusion guard will be prefixed with that namespace:
+		Framework/Global.hpp
+	will have inclusion guard:
+		FRAMEWORK_GLOBAL_HPP
+
+
+Classes & Structs:
+	* Classes and structs will be named in camel case as such:
+		class SomeClassName
+		
+	* Methods will follow the same standard as class names:
+		void SomeMethod()
+		
+	* Members will be prefixed with m_ and use camel case as such:
+		int m_someInteger
+		
+	* Static members (non-constant) will be prefixed with s_:
+		static int s_someStaticInteger
+
+
+Variables:
+	* Local variables and parameters will just be in camel case:
+		int someLocalVariable
+		
+	* Constants will be prefixed with C_ and use all upper case:
+		C_SOME_CONSTANT

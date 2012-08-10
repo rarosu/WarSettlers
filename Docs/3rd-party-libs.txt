@@ -1,0 +1,18 @@
+Third party libraries:
+
+These libraries will eventually be needed, to have full support. This is preliminary, and the libraries may be subject to change.
+
+* boost
+	Dependency of Assimp, also useful utilities.
+	
+* Assimp 3.0
+	For loading models and textures, and managing the resource pipeline in a nice way.
+
+* FreeType?
+	For managing fonts and being able to render text
+	
+* Raknet
+	For managing the network part. Is a good library, but will require indie registration (no catches from what I can see). Alternatives?
+
+* FMOD
+	For playing sounds and music

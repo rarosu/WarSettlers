@@ -1,0 +1,18 @@
+CODE STRUCTURE
+
+The Model-View-Controller pattern will be used for the actual game, to simplify the different ways the game can be interacted with (local, network, AI, etc.). The code itself will be structured into the following namespaces:
+
+* Framework
+	Contains boilerplate code for initializing Win32 and Direct3D, and other things not essentially tied to this game specifically.
+	
+* Utility
+	Contains helper code such as math, logging, profiling, etc.
+	
+* Model
+	Contains the actual model of the game, handles the data and the simulation of the logic. Will be updated at regular intervals (game ticks).
+
+* View
+	Retrieves data from the model, and creates a 3D view from that.
+	
+* Controller
+	Will control the Model through methods, and can change its behaviour. Can be used to control a side in the game, either through input, AI, network or replay file.
