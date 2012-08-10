@@ -13,11 +13,6 @@
 namespace Framework
 {
 	/**
-		Forward-declare
-	*/
-	class Window;
-
-	/**
 		Initializes and manages D3D11. Handles the device,
 		the swap chain and the back buffer, the depth/stencil buffer and
 		the viewports.

@@ -1,4 +1,28 @@
 TASK LIST
 
 * Timer
-	High precision timer, for measuring delta time
+	High precision timer, e.g. for measuring delta time
+	
+* Camera
+	A general camera class, containing a view and a projection matrix.
+
+* Boost Integration
+	Add the boost library to the project and get it to compile.
+	
+* Direct3D11 Effect support [rarosu]
+	For being able to combine Vertex-, Geometry- and Pixel shaders into one script file. The source to compile can be found in DXSDK_DIR\Samples\C++\Effects11. Integrate into project (Libs/) and get it to compile.
+
+* D3D11 Resource Management [rarosu]
+	Make a class that can centralize the management of Vertex Buffers, Index Buffers and Effects. We don't want these heavy resources to be copied around, and we want to be able to control them.
+
+* Font & Text output
+	Creating a class that manages a font resource and has a way of drawing text to the screen.
+	
+* Assimp Integration
+	Compile the Assimp library and add it to the project. Get the project to compile.
+
+* Entity
+	An entity class for renderable objects. Contains a mesh (for now?). Later additions being materials (textures).
+	
+* SceneManager
+	A scene manager, a tree with SceneNodes, that can be translated and rotated with a world matrix. Entities can be attached to a scene node, and a scene node "inherits" its parent's world matrix.
