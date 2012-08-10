@@ -4,8 +4,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 {
 	try
 	{
-		WarSettlers game(instance, showState);
-		return game.Start();
+		return CreateAndStartGame(instance, showState);
 	}
 	catch (std::exception& e)
 	{

@@ -23,6 +23,18 @@ namespace Framework
 		return m_window.GetExitValue();
 	}
 
+
+	Window& Game::GetWindow()
+	{
+		return m_window;
+	}
+
+	D3DWrapper& Game::GetD3D()
+	{
+		return m_d3d;
+	}
+
+
 	void Game::RenderWrapper(float dt, float interpolation)
 	{
 		// Clear the back buffer.

@@ -50,6 +50,16 @@ namespace Framework
 			else.
 		*/
 		virtual void Render(float dt, float interpolation) = 0;
+
+		/**
+			Get a reference to the window.
+		*/
+		Window& GetWindow();
+
+		/**
+			Get a reference to the D3D wrapper.
+		*/
+		D3DWrapper& GetD3D();
 	private:
 		bool m_running;
 
