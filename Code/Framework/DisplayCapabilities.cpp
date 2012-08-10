@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <cstdlib>
 #include "COMResource.hpp"
-#include <Libs\r2tk\r2-exception.hpp>
 
 
 namespace Framework
@@ -66,38 +65,38 @@ namespace Framework
 		COMResource<IDXGIFactory> factory;
 		result = CreateDXGIFactory(__uuidof(IDXGIFactory), (LPVOID*)&factory.Resource());
 		if (FAILED(result))
-			throw r2ExceptionRuntimeM("Failed to create DXGI factory");
+			throw DirectXErrorM(result, "Failed to create DXGI factory");
 
 		// Find the first DXGI adapter (primary video card)
 		COMResource<IDXGIAdapter> adapter;
 		result = factory->EnumAdapters(0, &adapter.Resource());
 		if (FAILED(result))
-			throw r2ExceptionRuntimeM("Failed to access primary DXGI adapter"); 
+			throw DirectXErrorM(result, "Failed to access primary DXGI adapter"); 
 		result = adapter->GetDesc(&m_adapterDescription);
 		if (FAILED(result))
-			throw r2ExceptionRuntimeM("Failed to access primary DXGI adapter description");
+			throw DirectXErrorM(result, "Failed to access primary DXGI adapter description");
 
 		// Find the first DXGI output for the adapter (primary monitor connected to the primary video card)
 		COMResource<IDXGIOutput> output;
 		result = adapter->EnumOutputs(0, &output.Resource());
 		if (FAILED(result))
-			throw r2ExceptionRuntimeM("Failed to access primary DXGI output from the primary DXGI adapter");
+			throw DirectXErrorM(result, "Failed to access primary DXGI output from the primary DXGI adapter");
 		result = output->GetDesc(&m_outputDescription);
 		if (FAILED(result))
-			throw r2ExceptionRuntimeM("Failed to access primary DXGI output description");
+			throw DirectXErrorM(result, "Failed to access primary DXGI output description");
 
 
 		// Find the number of display modes available for the given output
 		unsigned int displayModeCount;
 		result = output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &displayModeCount, NULL);
 		if (FAILED(result))
-			throw r2ExceptionRuntimeM("Failed to access number of display modes");
+			throw DirectXErrorM(result, "Failed to access number of display modes");
 
 		// List all display modes available from the DXGI output
 		std::vector<DXGI_MODE_DESC> displayModes(displayModeCount);
 		result = output->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &displayModeCount, &displayModes[0]);
 		if (FAILED(result))
-			throw r2ExceptionRuntimeM("Failed to list display modes");
+			throw DirectXErrorM(result, "Failed to list display modes");
 
 		// Store the display modes
 		m_displayModes.resize(displayModeCount);

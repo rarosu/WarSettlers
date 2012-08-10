@@ -2,8 +2,6 @@
 
 #include <sstream>
 #include "Global.hpp"
-#include <Libs\r2tk\r2-exception.hpp>
-#include <Libs\r2tk\r2-assert.hpp>
 
 namespace Framework
 {
