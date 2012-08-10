@@ -28,38 +28,49 @@ namespace Utility
 		~Logger() throw();
 
 		/**
-			Log a message with generic information. Printed
-			in both release and debug.
+			Log a message with generic information. 
+			Printed in both release and debug.
 		*/
 		void I(const char* format, ...);
 
 		/**
-			Log a message with debug information. Will
-			only be printed when the project is compiled in
+			Log a message with debug information. 
+			Will only be printed when the project is compiled in
 			debug mode. Will flush immediately.
 		*/
 		void D(const char* format, ...);
 
 		/**
-			Log a message with a warning. Printed
-			in both release and debug.
+			Log a message with a warning. 
+			Printed in both release and debug.
 		*/
 		void W(const char* format, ...);
 
 		/**
-			Log a message with an error. Printed
-			in both release and debug. Will flush immediately.
+			Log a message with an error. Printed in both release and debug. 
+			Will flush immediately and notify the user in a message box.
 		*/
 		void E(const char* format, ...);
 	private:
-		/**
-			Construct a message and print it to both file and console.
-		*/
-		void PrintString(const std::string& level, const std::string& message, bool flush);
+		static const unsigned int C_BUFFER_SIZE;
 
 		std::fstream m_logFile;
 
-		static const unsigned int C_BUFFER_SIZE;
+
+		/**
+			Construct a message
+		*/
+		std::string ConstructMessage(const std::string& level, const std::string& message);
+
+		/**
+			Log the message to file
+		*/
+		void LogMessageToFile(const std::string& message, bool flush);
+
+		/**
+			Log the message to output
+		*/
+		void LogMessageToConsole(const std::string& message);
 	};	
 }
 

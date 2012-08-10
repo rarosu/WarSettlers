@@ -28,7 +28,9 @@ namespace Utility
 		char buffer[C_BUFFER_SIZE];
 		vsprintf_s(buffer, format, args);
 
-		PrintString("INFO", buffer, false);
+		std::string message = ConstructMessage("INFO", buffer);
+		LogMessageToFile(message, false);
+		LogMessageToConsole(message);
 
 		va_end(args);
 	}
@@ -42,7 +44,9 @@ namespace Utility
 		char buffer[C_BUFFER_SIZE];
 		vsprintf_s(buffer, format, args);
 
-		PrintString("DEBUG", buffer, true);
+		std::string message = ConstructMessage("DEBUG", buffer);
+		LogMessageToFile(message, true);
+		LogMessageToConsole(message);
 
 		va_end(args);
 #endif
@@ -56,7 +60,9 @@ namespace Utility
 		char buffer[C_BUFFER_SIZE];
 		vsprintf_s(buffer, format, args);
 
-		PrintString("WARNING", buffer, false);
+		std::string message = ConstructMessage("WARNING", buffer);
+		LogMessageToFile(message, false);
+		LogMessageToConsole(message);
 
 		va_end(args);
 	}
@@ -69,18 +75,32 @@ namespace Utility
 		char buffer[C_BUFFER_SIZE];
 		vsprintf_s(buffer, format, args);
 
-		PrintString("ERROR", buffer, true);
+		std::string message = ConstructMessage("ERROR", buffer);
+		LogMessageToFile(message, true);
+		LogMessageToConsole(message);
+		MessageBox(NULL, message.c_str(), "Error", MB_OK | MB_ICONERROR);
 
 		va_end(args);
 	}
 
-
-	void Logger::PrintString(const std::string& level, const std::string& message, bool flush)
+	std::string Logger::ConstructMessage(const std::string& level, const std::string& message)
 	{
 		std::stringstream stream;
 		stream << "[" << level << "] " << message;
 
-		m_logFile << stream.str();
-		OutputDebugString(stream.str().c_str());
+		return stream.str();
+	}
+
+	void Logger::LogMessageToFile(const std::string& message, bool flush)
+	{
+		m_logFile << message;
+		
+		if (flush)
+			m_logFile.flush();
+	}
+
+	void Logger::LogMessageToConsole(const std::string& message)
+	{
+		OutputDebugString(message.c_str());
 	}
 }

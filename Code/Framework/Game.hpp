@@ -63,7 +63,6 @@ namespace Framework
 	private:
 		bool m_running;
 
-		Utility::Logger m_logger;
 		Window m_window;
 		D3DWrapper m_d3d;
 
