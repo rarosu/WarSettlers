@@ -3,6 +3,7 @@
 
 #include "Window.hpp"
 #include "D3DWrapper.hpp"
+#include "GameTimer.hpp"
 #include <Utility\Logger.hpp>
 
 namespace Framework
@@ -42,14 +43,14 @@ namespace Framework
 		/**
 			Update the game logic one tick. Implemented by the actual game.
 		*/
-		virtual void Update(float dt) = 0;
+		virtual void Update(double dt) = 0;
 
 		/**
 			Render a scene. The entities of the scene have already been
 			rendered when this is called. Should be used to render everything
 			else.
 		*/
-		virtual void Render(float dt, float interpolation) = 0;
+		virtual void Render(double dt, float interpolation) = 0;
 
 		/**
 			Get a reference to the window.
@@ -65,6 +66,8 @@ namespace Framework
 
 		Window m_window;
 		D3DWrapper m_d3d;
+		
+		GameTimer m_frameTimer; 
 
 
 		/**

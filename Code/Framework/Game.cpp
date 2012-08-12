@@ -6,17 +6,21 @@ namespace Framework
 		: m_running(true)
 		, m_window(m_instance, description.m_windowDescription)
 		, m_d3d(&m_window, description.m_d3dDescription)
+		, m_frameTimer(1.0, 0.001)
 	{}
 
 	int Game::Start()
 	{
+		LARGE_INTEGER perfCounter; 
 		while (m_running)
 		{
-			m_running = m_window.ProcessMessages();
+			m_running = m_window.ProcessMessages();			
 
-			// TODO: Add timing
-			Update(0.0f);
-			Render(0.0f, 0.0f);
+			// dt is in fraction of second elapsed since last frame. 
+			double dt = m_frameTimer.GetDt(); 
+			
+			Update(dt);
+			Render(dt, 0.0f);
 		}
 
 		return m_window.GetExitValue();

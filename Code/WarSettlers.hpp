@@ -31,13 +31,13 @@ protected:
 	/**
 		Update the game logic one tick.
 	*/
-	void Update(float dt);
+	void Update(double dt);
 
 	/**
 		Render everything but the entities in the scene manager (i.e.
 		HUD, debug output, buffers, etc.)
 	*/
-	void Render(float dt, float interpolation);
+	void Render(double dt, float interpolation);
 private:
 	Framework::DisplayCapabilities m_displayCapabilities;
 	unsigned int m_currentDisplayMode;

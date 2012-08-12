@@ -57,12 +57,12 @@ void WarSettlers::KeyPressed(int keyCode)
 }
 
 
-void WarSettlers::Update(float dt)
+void WarSettlers::Update(double dt)
 {
 	// TODO: Add game logic
 }
 
-void WarSettlers::Render(float dt, float interpolation)
+void WarSettlers::Render(double dt, float interpolation)
 {
 	// TODO: Render HUD, debug output, etc.
 }
