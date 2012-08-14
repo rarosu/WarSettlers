@@ -107,6 +107,15 @@
     <ClInclude Include="Code\Utility\Logger.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Code\Libs\Effects11\d3dx11dbg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Libs\Effects11\d3dxGlobal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Libs\Effects11\d3dx11effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -114,5 +123,6 @@
     <None Include="README.txt" />
     <None Include="push.sh" />
     <None Include="pull.sh" />
+    <None Include="Resources\Effects\BasicColor.fx" />
   </ItemGroup>
 </Project>
