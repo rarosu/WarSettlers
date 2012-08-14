@@ -1,0 +1,7 @@
+DESIGN DECISIONS
+
+* The major design of the application will be in Engine/Game, and the Game will be divided according to the Model-View-Controller pattern.
+
+* The scene will be organized in some way that will make it easy to sort objects on various properties, for instance vertex buffer and shader. A scene manager can be used to centralize all entities and all the draw calls for geometry (in addition to handling transformations).
+
+* All resources in the Engine will be centralized, and possibly be accessed through Proxy objects (holding only an index for instance). This will simplify resource management.
