@@ -99,6 +99,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Code\Framework\GameTimer.hpp">
+    <ClInclude Include="Code\Libs\Effects11\d3dx11dbg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Libs\Effects11\d3dxGlobal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Libs\Effects11\d3dx11effect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -108,5 +115,6 @@
     <None Include="README.txt" />
     <None Include="push.sh" />
     <None Include="pull.sh" />
+    <None Include="Resources\Effects\BasicColor.fx" />
   </ItemGroup>
 </Project>

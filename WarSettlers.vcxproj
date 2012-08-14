@@ -67,7 +67,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IntDir>Build\x86\$(Configuration)\</IntDir>
     <IncludePath>$(ProjectDir)Code;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(ProjectDir)Libs\x86\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>Dist\x86\$(Configuration)\</OutDir>
@@ -75,7 +75,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>Build\x86\$(Configuration)\</IntDir>
     <IncludePath>$(ProjectDir)Code;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(ProjectDir)Libs\x86\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>Dist\x64\$(Configuration)\</OutDir>
@@ -83,7 +83,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>Build\x64\$(Configuration)\</IntDir>
     <IncludePath>$(ProjectDir)Code;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(ProjectDir)Libs\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>Dist\x64\$(Configuration)\</OutDir>
@@ -91,7 +91,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>Build\x64\$(Configuration)\</IntDir>
     <IncludePath>$(ProjectDir)Code;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(ProjectDir)Libs\x64\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -103,7 +103,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;D3DCompiler.lib;Effects11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -116,7 +116,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;D3DCompiler.lib;Effects11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,7 +133,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;D3DCompiler.lib;Effects11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,7 +150,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;D3DCompiler.lib;Effects11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -177,6 +177,9 @@
     <ClInclude Include="Code\Framework\InputManager.hpp" />
     <ClInclude Include="Code\Framework\Window.hpp" />
     <ClInclude Include="Code\Framework\WinInclude.hpp" />
+    <ClInclude Include="Code\Libs\Effects11\d3dx11dbg.h" />
+    <ClInclude Include="Code\Libs\Effects11\d3dx11effect.h" />
+    <ClInclude Include="Code\Libs\Effects11\d3dxGlobal.h" />
     <ClInclude Include="Code\Libs\r2tk\r2-assert.hpp" />
     <ClInclude Include="Code\Libs\r2tk\r2-exception.hpp" />
     <ClInclude Include="Code\Libs\r2tk\r2-global.hpp" />
@@ -191,6 +194,7 @@
     <None Include="pull.sh" />
     <None Include="push.sh" />
     <None Include="README.txt" />
+    <None Include="Resources\Effects\BasicColor.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

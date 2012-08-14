@@ -1,4 +1,5 @@
 #include <Utility\Logger.hpp>
+#include <Libs\Effects11\d3dx11effect.h>
 #include "WarSettlers.hpp"
 
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int showState)
