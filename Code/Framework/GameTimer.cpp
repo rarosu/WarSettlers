@@ -1,4 +1,5 @@
 #include "GameTimer.hpp"
+#include "Libs/r2tk/r2-exception.hpp"
 
 namespace Framework 
 {
@@ -7,23 +8,9 @@ namespace Framework
 		m_lastTicks; 
 		m_currentTicks; 
 		m_frequency; 
-
-		m_zeroTime = 0.001; 
-		m_maxTime = 1.0; 
-
-		QueryPerformanceFrequency(&m_frequency); 
-	}
-
-	GameTimer::GameTimer(double maxTime, double zeroTime)
-	{
-		m_lastTicks; 
-		m_currentTicks; 
-		m_frequency; 
-
-		m_maxTime = maxTime; 
-		m_zeroTime = zeroTime; 
-
-		QueryPerformanceFrequency(&m_frequency); 
+		
+		if(!QueryPerformanceFrequency(&m_frequency))
+			r2ExceptionRuntimeM("Unable to use hardware timer (QueryPerformanceFrequency)");  
 	}
 
 
@@ -37,7 +24,8 @@ namespace Framework
 	*/
 	double GameTimer::GetDt() 
 	{				
-		QueryPerformanceCounter(&m_currentTicks); 
+		if(!QueryPerformanceCounter(&m_currentTicks)) 
+			r2ExceptionRuntimeM("Unable to use hardware timer (QueryPerformanceCounter)");  
 
 		if(m_currentTicks.QuadPart != m_lastTicks.QuadPart && m_frequency.QuadPart > 0) 
 		{
@@ -47,14 +35,9 @@ namespace Framework
 
 			m_lastTicks = m_currentTicks; 
 		}
-
-		// adjust for extreme values 
-		if(m_dt > m_maxTime) 
-			m_dt = m_maxTime; 
-
-		if(m_dt == 0) 
-			m_dt = m_zeroTime; 
-
+		
+		if(m_dt < 0) 
+			m_dt = 0; 
 
 		return(m_dt); 
 	}

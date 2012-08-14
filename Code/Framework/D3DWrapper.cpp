@@ -117,7 +117,7 @@ namespace Framework
 		ZeroMemory(&modeDescription, sizeof(modeDescription));
 		modeDescription.Format = DXGI_FORMAT_UNKNOWN;
 		modeDescription.Width = displayMode.m_width;
-		modeDescription.Height = displayMode.m_height;
+		modeDescription.Height = displayMode.m_height; 
 		modeDescription.RefreshRate = displayMode.m_refreshRate;
 
 		result = m_swapChain->ResizeTarget(&modeDescription);
@@ -129,7 +129,7 @@ namespace Framework
 	{
 		HRESULT result = S_OK;
 
-		result = m_swapChain->SetFullscreenState(!IsFullscreen(), NULL);
+		result = m_swapChain->SetFullscreenState(!IsFullscreen(), NULL); 
 
 		return result;
 	}

@@ -6,12 +6,11 @@ namespace Framework
 		: m_running(true)
 		, m_window(m_instance, description.m_windowDescription)
 		, m_d3d(&m_window, description.m_d3dDescription)
-		, m_frameTimer(1.0, 0.001)
+		, m_frameTimer()
 	{}
 
 	int Game::Start()
-	{
-		LARGE_INTEGER perfCounter; 
+	{		
 		while (m_running)
 		{
 			m_running = m_window.ProcessMessages();			
