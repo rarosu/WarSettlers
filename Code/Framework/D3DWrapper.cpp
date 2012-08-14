@@ -154,6 +154,8 @@ namespace Framework
 		// Output debug information
 		Utility::Logger::Instance().D("Resize: %u x %u\n", clientWidth, clientHeight);
 
+		m_deviceContext->OMSetRenderTargets(0, NULL, NULL);
+
 		// Release references to resources
 		m_backBufferView = NULL;
 		m_depthStencilView = NULL;
@@ -173,6 +175,8 @@ namespace Framework
 		result = CreateDepthStencilBuffer(m_backBufferDescription.Width, m_backBufferDescription.Height);
 		if (FAILED(result))
 			throw DirectXErrorM(result, "Failed to recreate depth/stencil buffer");
+
+		m_deviceContext->OMSetRenderTargets(1, &m_backBufferView.Resource(), m_depthStencilView.Resource()); 
 
 		// Recreate the viewports
 		UpdateViewports(m_viewports);

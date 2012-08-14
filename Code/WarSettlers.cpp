@@ -67,11 +67,22 @@ void WarSettlers::Update(double dt)
 	// TODO: Add game logic
 }
 
-void WarSettlers::Render(double dt, float interpolation)
+void WarSettlers::Render(double dt, double interpolation)
 {
 	// TODO: Render HUD, debug output, etc.
 
 	// TODO: Remove ugly test code
+	unsigned int offset = 0;
+	unsigned int size = sizeof(Vertex);
+	GetD3D().GetContext()->IASetInputLayout(m_inputLayout.Resource());
+	GetD3D().GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	GetD3D().GetContext()->IASetVertexBuffers(0, 1, &m_vertexBuffer.Resource(), &size, &offset);
+
+	D3DXMATRIX wvp;
+	D3DXMatrixIdentity(&wvp);
+
+	m_variableWVP->SetMatrix((FLOAT*)wvp);
+
 	for (unsigned int p = 0; p < m_techniqueDescription.Passes; ++p)
 	{
 		m_effect->GetTechniqueByIndex(0)->GetPassByIndex(p)->Apply(0, GetD3D().GetContext().Resource());
@@ -112,7 +123,7 @@ void WarSettlers::SetupBuffers()
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(WarSettlers::Vertex) * vertices.size();
+	vertexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(WarSettlers::Vertex) * vertices.size());
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
@@ -131,7 +142,7 @@ void WarSettlers::SetupBuffers()
 	// Describe the index buffer
 	D3D11_BUFFER_DESC indexBufferDesc;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.ByteWidth = sizeof(unsigned int) * indices.size();
+	indexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(unsigned int) * indices.size());
 	indexBufferDesc.CPUAccessFlags = 0;
 	indexBufferDesc.MiscFlags = 0;
 	indexBufferDesc.StructureByteStride = 0;
@@ -170,7 +181,7 @@ void WarSettlers::SetupEffect()
 		std::string errorMessage;
 		if (errors != NULL)
 		{
-			errorMessage = (const char*)errors;
+			errorMessage = static_cast<const char*>(errors->GetBufferPointer());
 		}
 		else
 		{
@@ -208,10 +219,13 @@ void WarSettlers::SetupEffect()
 	D3DX11_PASS_DESC passDesc;
 	m_effect->GetTechniqueByIndex(0)->GetPassByIndex(0)->GetDesc(&passDesc);
 	
-	result = GetD3D().GetDevice()->CreateInputLayout(&inputLayout[0], inputLayout.size(), passDesc.pIAInputSignature, passDesc.IAInputSignatureSize, &m_inputLayout.Resource());
+	result = GetD3D().GetDevice()->CreateInputLayout(&inputLayout[0], (UINT)inputLayout.size(), passDesc.pIAInputSignature, passDesc.IAInputSignatureSize, &m_inputLayout.Resource());
 	if (FAILED(result))
 		throw DirectXErrorM(result, "Failed to create input layout");
 
 	// Store the technique description
 	m_effect->GetTechniqueByIndex(0)->GetDesc(&m_techniqueDescription);
+
+	// Store variable references
+	m_variableWVP = m_effect->GetVariableByName("gWVP")->AsMatrix();
 }

@@ -50,7 +50,7 @@ namespace Framework
 			rendered when this is called. Should be used to render everything
 			else.
 		*/
-		virtual void Render(double dt, float interpolation) = 0;
+		virtual void Render(double dt, double interpolation) = 0;
 
 		/**
 			Get a reference to the window.
@@ -74,7 +74,7 @@ namespace Framework
 			Render a scene. Will render the entities in the scene manager,
 			and then give control to the derived class by calling Render().
 		*/
-		void RenderWrapper(float dt, float interpolation);
+		void RenderWrapper(double dt, double interpolation);
 	};
 }
 

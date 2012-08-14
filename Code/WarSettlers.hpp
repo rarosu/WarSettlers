@@ -38,7 +38,7 @@ protected:
 		Render everything but the entities in the scene manager (i.e.
 		HUD, debug output, buffers, etc.)
 	*/
-	void Render(double dt, float interpolation);
+	void Render(double dt, double interpolation);
 private:
 	Framework::DisplayCapabilities m_displayCapabilities;
 	unsigned int m_currentDisplayMode;
@@ -63,6 +63,7 @@ private:
 
 	Framework::COMResource<ID3DX11Effect> m_effect;
 	Framework::COMResource<ID3D11InputLayout> m_inputLayout;
+	ID3DX11EffectMatrixVariable* m_variableWVP;
 	D3DX11_TECHNIQUE_DESC m_techniqueDescription;
 	/**
 		/Testing

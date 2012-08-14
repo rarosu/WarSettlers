@@ -125,7 +125,6 @@ namespace Framework
 		COMResource<ID3D11Device> m_device;
 		COMResource<ID3D11DeviceContext> m_deviceContext;
 		COMResource<IDXGISwapChain> m_swapChain;
-		COMResource<IDXGIAdapter> m_adapter;
 
 		COMResource<ID3D11RenderTargetView> m_backBufferView;
 		COMResource<ID3D11Texture2D> m_depthStencilBuffer;

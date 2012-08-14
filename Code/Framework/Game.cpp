@@ -19,7 +19,9 @@ namespace Framework
 			double dt = m_frameTimer.GetDt(); 
 			
 			Update(dt);
-			Render(dt, 0.0f);
+			RenderWrapper(dt, 0.0f);
+
+			Sleep(10);
 		}
 
 		return m_window.GetExitValue();
@@ -37,7 +39,7 @@ namespace Framework
 	}
 
 
-	void Game::RenderWrapper(float dt, float interpolation)
+	void Game::RenderWrapper(double dt, double interpolation)
 	{
 		// Clear the back buffer.
 		m_d3d.Clear();
