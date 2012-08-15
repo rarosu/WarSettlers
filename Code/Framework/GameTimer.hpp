@@ -11,8 +11,7 @@ namespace Framework
 	class GameTimer
 	{
 	public:
-		GameTimer(void);
-		GameTimer(double maxTime, double zeroTime); 
+		GameTimer(void);		
 		~GameTimer(void);
 
 		// Gets the deltatime in fractions of seconds since last time this method was called. 

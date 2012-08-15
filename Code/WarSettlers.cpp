@@ -116,7 +116,7 @@ void WarSettlers::SetupBuffers()
 	indices[0] = 0;
 	indices[1] = 1;
 	indices[2] = 2;
-
+	
 
 	// Describe the vertex buffer
 	D3D11_BUFFER_DESC vertexBufferDesc;

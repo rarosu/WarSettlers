@@ -12,10 +12,10 @@ OPEN TASKS
 * Font & Text output
 	Creating a class that manages a font resource and has a way of drawing text to the screen.
 	
-* Assimp Integration
+* Assimp Integration [devcast]
 	Compile the Assimp library and add it to the project. Get the project to compile.
 
-* Entity
+* Entity [devcast]
 	An entity class for renderable objects. Contains a mesh (for now?). Later additions being materials (textures).
 	
 * SceneManager

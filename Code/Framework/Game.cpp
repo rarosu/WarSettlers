@@ -7,7 +7,9 @@ namespace Framework
 		, m_window(m_instance, description.m_windowDescription)
 		, m_d3d(&m_window, description.m_d3dDescription)
 		, m_frameTimer()
-	{}
+	{
+
+	}
 
 	int Game::Start()
 	{		
@@ -19,9 +21,7 @@ namespace Framework
 			double dt = m_frameTimer.GetDt(); 
 			
 			Update(dt);
-			RenderWrapper(dt, 0.0f);
-
-			Sleep(10);
+			RenderWrapper(dt, 0.0f);			
 		}
 
 		return m_window.GetExitValue();
