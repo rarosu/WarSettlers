@@ -99,6 +99,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Code\Framework\GameTimer.hpp">
+		<Filter>Header Files</Filter>
+	</ClInclude>
     <ClInclude Include="Code\Libs\Effects11\d3dx11dbg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
