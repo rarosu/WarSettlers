@@ -9,6 +9,7 @@ namespace Framework
 	class CameraController
 	{
 	public:
+		CameraController(); 
 		CameraController(Camera *camera);
 		virtual ~CameraController(); 
 

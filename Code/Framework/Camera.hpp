@@ -21,7 +21,9 @@ namespace Framework
 	class Camera
 	{
 	public:
+		Camera(); 
 		Camera(const D3DXVECTOR3& position, const D3DXVECTOR3& target, const D3DXMATRIX& projection);
+		Camera(const D3DXVECTOR3& position, const D3DXVECTOR3& target, double _near, double _far, double fieldOfViewY, double aspectRatio); 
 
 		void SetPosition(const D3DXVECTOR3& position);
 		void SetDirection(const D3DXVECTOR3& direction);
@@ -44,6 +46,7 @@ namespace Framework
 		D3DXMATRIX m_view;
 		D3DXMATRIX m_projection;
 		D3DXMATRIX m_viewProjection;
+		Framework::Frustum m_frustum; 
 	};
 }
 

@@ -4,6 +4,11 @@ namespace Framework
 {
 	const double FPSCameraController::C_VELOCITY = 10; 
 
+	FPSCameraController::FPSCameraController()
+	{
+
+	}
+
 	FPSCameraController::FPSCameraController(Camera *camera)
 		: CameraController(camera) 
 		, m_movingForward(0)
@@ -50,7 +55,7 @@ namespace Framework
 
 			case VK_RIGHT:
 			case VK_LEFT: 
-				m_movingSideways = 0; 
+				m_movingSideways = 0;  
 			break; 
 		}
 	}
@@ -69,7 +74,13 @@ namespace Framework
 		D3DXVECTOR3 position = m_camera->GetPosition();
 		D3DXVECTOR3 direction = m_camera->GetDirection();
 	
-		m_camera->SetPosition(position + C_VELOCITY * dt * direction * m_movingForward); 
+		m_camera->SetPosition(position + C_VELOCITY * dt * direction * m_movingForward); 				
+		m_camera->Commit(); 
+	}
+
+	const D3DXMATRIX& FPSCameraController::GetViewProjection() const
+	{
+		return m_camera->GetViewProjection(); 
 	}
 
 }

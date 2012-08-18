@@ -2,6 +2,7 @@
 #define WAR_SETTLERS_HPP
 
 #include <Framework\Game.hpp>
+#include "Framework\FPSCameraController.hpp"
 #include <Libs\Effects11\d3dx11effect.h>
 
 /**
@@ -65,6 +66,11 @@ private:
 	Framework::COMResource<ID3D11InputLayout> m_inputLayout;
 	ID3DX11EffectMatrixVariable* m_variableWVP;
 	D3DX11_TECHNIQUE_DESC m_techniqueDescription;
+
+	Framework::FPSCameraController m_fpsCameraController; 
+	Framework::Camera m_camera; 
+	
+
 	/**
 		/Testing
 	*/

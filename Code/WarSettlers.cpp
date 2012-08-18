@@ -1,5 +1,6 @@
 #include "WarSettlers.hpp"
 
+#include "Framework\FPSCameraController.hpp"
 #include <Framework\DisplayCapabilities.hpp>
 
 int CreateAndStartGame(HINSTANCE instance, int showState)
@@ -30,12 +31,13 @@ WarSettlers::WarSettlers(HINSTANCE instance, const Framework::Game::Description&
 	, m_displayCapabilities(displayCapabilities)
 	, m_currentDisplayMode(0)
 	, m_vertexCount(3)
-	, m_indexCount(3)
-{
-	Framework::InputManager::Instance().AddInputListener(this);
-
+	, m_indexCount(3)	
+	, m_camera(D3DXVECTOR3(0, 0, -10), D3DXVECTOR3(0, 0, 0.5), 0.1, 500.0, 45, (double)displayCapabilities.m_displayModes[0].m_width / (double)displayCapabilities.m_displayModes[0].m_height)
+	, m_fpsCameraController(&m_camera)
+{	
+	Framework::InputManager::Instance().AddInputListener(this);	
 	SetupBuffers();
-	SetupEffect();
+	SetupEffect();	
 }
 
 WarSettlers::~WarSettlers() throw()
@@ -65,6 +67,7 @@ void WarSettlers::KeyPressed(int keyCode)
 void WarSettlers::Update(double dt)
 {
 	// TODO: Add game logic
+	m_fpsCameraController.Update(dt); 
 }
 
 void WarSettlers::Render(double dt, double interpolation)
@@ -78,8 +81,8 @@ void WarSettlers::Render(double dt, double interpolation)
 	GetD3D().GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	GetD3D().GetContext()->IASetVertexBuffers(0, 1, &m_vertexBuffer.Resource(), &size, &offset);
 
-	D3DXMATRIX wvp;
-	D3DXMatrixIdentity(&wvp);
+	D3DXMATRIX wvp;	
+	wvp = this->m_fpsCameraController.GetViewProjection(); 
 
 	m_variableWVP->SetMatrix((FLOAT*)wvp);
 

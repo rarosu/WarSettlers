@@ -12,12 +12,29 @@ namespace Framework
 	}
 
 
+	Camera::Camera() 
+	{
+
+	}
 
 	Camera::Camera(const D3DXVECTOR3& position, const D3DXVECTOR3& target, const D3DXMATRIX& projection)
 		: m_position(position)
 	{
 		SetTargetPoint(target);
 		SetProjection(projection);
+	}
+
+	Camera::Camera(const D3DXVECTOR3& position, const D3DXVECTOR3& target, double _near, double _far, double fieldOfViewY, double aspectRatio)
+		: m_position(position)
+	{
+		m_frustum = Frustum(); 
+		m_frustum.m_near = _near; 
+		m_frustum.m_far = _far; 
+		m_frustum.m_fieldOfViewY = fieldOfViewY; 
+		m_frustum.m_aspectRatio = aspectRatio; 
+		m_projection = m_frustum.CalculateProjection(); 
+
+		SetTargetPoint(target);
 	}
 
 	void Camera::SetPosition(const D3DXVECTOR3& position)
