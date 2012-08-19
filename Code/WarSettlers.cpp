@@ -68,6 +68,7 @@ void WarSettlers::Update(double dt)
 {
 	// TODO: Add game logic
 	m_fpsCameraController.Update(dt); 
+	m_camera.Commit(); 
 }
 
 void WarSettlers::Render(double dt, double interpolation)

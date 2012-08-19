@@ -69,8 +69,7 @@ namespace Framework
 	
 		UpdateRotation(direction, dt); 
 					
-		m_camera->SetPosition(position + C_VELOCITY * dt * direction * m_movingForward); 				
-		m_camera->Commit(); 
+		m_camera->SetPosition(position + C_VELOCITY * dt * direction * m_movingForward); 						
 	}
 
 	void FPSCameraController::UpdateRotation(D3DXVECTOR3 direction, double dt)

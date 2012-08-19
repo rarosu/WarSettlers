@@ -20,8 +20,7 @@ namespace Framework
 	protected: 
 		Camera *m_camera; 
 
-		int m_screenWidth; 
-		int m_screenHeight; 
+	
 	};
 
 }
