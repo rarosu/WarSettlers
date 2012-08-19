@@ -32,8 +32,8 @@ WarSettlers::WarSettlers(HINSTANCE instance, const Framework::Game::Description&
 	, m_currentDisplayMode(0)
 	, m_vertexCount(3)
 	, m_indexCount(3)	
-	, m_camera(D3DXVECTOR3(0, 0, -10), D3DXVECTOR3(0, 0, 0.5), 0.1, 500.0, 45, (double)displayCapabilities.m_displayModes[0].m_width / (double)displayCapabilities.m_displayModes[0].m_height)
-	, m_fpsCameraController(&m_camera)
+	, m_camera(D3DXVECTOR3(0, 5, -10), D3DXVECTOR3(0, 0, 10), 0.1, 500.0, 45, (double)displayCapabilities.m_displayModes[0].m_width / (double)displayCapabilities.m_displayModes[0].m_height)
+	, m_fpsCameraController(&m_camera, displayCapabilities.m_displayModes[0].m_width, displayCapabilities.m_displayModes[0].m_height)
 {	
 	Framework::InputManager::Instance().AddInputListener(this);	
 	SetupBuffers();
@@ -105,13 +105,13 @@ void WarSettlers::SetupBuffers()
 	std::vector<unsigned int> indices(m_indexCount);
 
 	// Setup a list of all vertices in a triangle
-	vertices[0].m_position = D3DXVECTOR4(-1.0f, 0.0f, 0.0f, 1.0f);
+	vertices[0].m_position = D3DXVECTOR4(0.0f, 0.0f, 0.0f, 1.0f);
 	vertices[0].m_color = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 	
-	vertices[1].m_position = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertices[1].m_position = D3DXVECTOR4(20.0f, 0.0f, 0.0f, 1.0f);
 	vertices[1].m_color = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
 	
-	vertices[2].m_position = D3DXVECTOR4(0.0f, 2.0f, 0.0f, 1.0f);
+	vertices[2].m_position = D3DXVECTOR4(20.0f, 0.0f, 20.0f, 1.0f);
 	vertices[2].m_color = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
 
 	// Setup a list of the order the triangles should come in (not necessary in this case, but

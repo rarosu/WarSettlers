@@ -11,7 +11,7 @@ namespace Framework
 	{
 	public:
 		CameraController(); 
-		CameraController(Camera *camera);
+		CameraController(Camera *camera, int screenWidth, int screenHeight);
 		virtual ~CameraController(); 
 
 		void WindowResized(unsigned int clientWidth, unsigned int clientHeight, unsigned int windowWidth, unsigned int windowHeight); 
@@ -19,6 +19,9 @@ namespace Framework
 
 	protected: 
 		Camera *m_camera; 
+
+		int m_screenWidth; 
+		int m_screenHeight; 
 	};
 
 }
