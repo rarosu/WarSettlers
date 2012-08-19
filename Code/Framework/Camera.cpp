@@ -40,12 +40,14 @@ namespace Framework
 	void Camera::SetPosition(const D3DXVECTOR3& position)
 	{
 		m_position = position;
+		m_frustum.m_position = position; 
 	}
 
 	void Camera::SetDirection(const D3DXVECTOR3& direction)
 	{
 		m_direction = direction;
 		D3DXVec3Normalize(&m_direction, &m_direction);
+		m_frustum.m_direction = m_direction; 
 	}
 
 	void Camera::SetTargetPoint(const D3DXVECTOR3& target)
@@ -70,6 +72,11 @@ namespace Framework
 		m_projection = projection;
 	}
 
+	void Camera::UpdateAspectRatio(double aspectRatio)
+	{
+		m_frustum.m_aspectRatio = aspectRatio; 
+		m_projection = m_frustum.CalculateProjection(); 
+	}
 
 	void Camera::Commit()
 	{

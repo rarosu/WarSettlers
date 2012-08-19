@@ -1,6 +1,7 @@
 #ifndef FRAMEWORK_FPS_CAMERACONTROLLER_HPP
 #define FRAMEWORK_FPS_CAMERACONTROLLER_HPP
 
+#include "Window.hpp"
 #include "InputManager.hpp"
 #include "CameraController.hpp"
 #include "Camera.hpp"
@@ -16,6 +17,7 @@ namespace Framework
 		void KeyPressed(int keyCode);
 		void KeyReleased(int keyCode);
 		void MouseMoved(unsigned int x, unsigned int y, int dx, int dy); 
+		
 		void Update(double dt); 
 		const D3DXMATRIX& GetViewProjection() const;
 	private:

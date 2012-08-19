@@ -33,6 +33,7 @@ namespace Framework
 		const D3DXVECTOR3& GetDirection() const;
 
 		void SetProjection(const D3DXMATRIX& projection);
+		void UpdateAspectRatio(double aspectRatio); 
 
 		void Commit();
 

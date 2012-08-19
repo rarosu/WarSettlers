@@ -15,11 +15,13 @@ namespace Framework
 		, m_movingSideways(0)
 	{
 		Framework::InputManager::Instance().AddInputListener(this);
+		
 	}
 	
 	FPSCameraController::~FPSCameraController()
 	{
 		Framework::InputManager::Instance().RemoveInputListener(this);
+		Framework::Window::Instance().RemoveEventListener(this); 
 	}
 
 	void FPSCameraController::KeyPressed(int keyCode)
@@ -60,10 +62,7 @@ namespace Framework
 		}
 	}
 
-	
-
-	
-	
+			
 	void FPSCameraController::MouseMoved(unsigned int x, unsigned int y, int dx, int dy)
 	{
 
