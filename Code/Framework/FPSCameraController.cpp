@@ -2,7 +2,8 @@
 
 namespace Framework
 {	
-	const double FPSCameraController::C_VELOCITY = 10; 
+	const double FPSCameraController::C_VELOCITY = 10;
+	const double FPSCameraController::C_SENSITIVITY = 1;
 
 	FPSCameraController::FPSCameraController()
 	{
@@ -12,13 +13,9 @@ namespace Framework
 	FPSCameraController::FPSCameraController(Camera *camera, int screenWidth, int screenHeight)
 		: CameraController(camera, screenWidth, screenHeight) 
 		, m_movingForward(0)
-		, m_movingSideways(0)
-		, m_xyAngle(0.0)
-		, m_zAngle(0.0)
+		, m_movingSideways(0)		
 	{
-		Framework::InputManager::Instance().AddInputListener(this);		
-		ZeroMemory(&m_lastCursorPos, sizeof(POINT)); 
-		ZeroMemory(&m_newCursorPos, sizeof(POINT)); 
+		Framework::InputManager::Instance().AddInputListener(this);			
 	}
 	
 	FPSCameraController::~FPSCameraController()
@@ -64,59 +61,49 @@ namespace Framework
 		}
 	}
 
-			
-	void FPSCameraController::MouseMoved(unsigned int x, unsigned int y, int dx, int dy)
-	{			
-			
-		
-	}
 	
 	void FPSCameraController::Update(double dt)
-	{		
-		UpdateRotation(); 
-
+	{	
 		D3DXVECTOR3 position = m_camera->GetPosition();
 		D3DXVECTOR3 direction = m_camera->GetDirection();		
+	
+		UpdateRotation(direction, dt); 
 					
 		m_camera->SetPosition(position + C_VELOCITY * dt * direction * m_movingForward); 				
 		m_camera->Commit(); 
 	}
 
-	void FPSCameraController::UpdateRotation()
-	{
-		double dx = 0.0; 
-		double dy = 0.0; 
-
-		GetCursorPos(&m_newCursorPos); 
-
-		if(m_newCursorPos.x != m_screenWidth/2 
-			&& m_newCursorPos.y != m_screenHeight/2) 
-		{			
-			dx = m_newCursorPos.x - m_lastCursorPos.x; 
-			dy = m_newCursorPos.y - m_lastCursorPos.y;		
-
-			m_xyAngle += (double)dx / 1000.0; 
-			m_zAngle += (double)dy / 1000.0; 
-
-			if(m_zAngle > M_PI_4) 
-				m_zAngle = M_PI_4; 
-			if(m_zAngle < -M_PI_4) 
-				m_zAngle = -M_PI_4; 
-
-			if(m_xyAngle > M_PI_2) 
-				m_xyAngle = M_PI_2; 
-			if(m_xyAngle < -M_PI_2) 
-				m_xyAngle = -M_PI_2; 
-
-			double sx = cos((double)m_xyAngle) * sin((double)m_zAngle); 
-			double sz = sin((double)m_xyAngle) * sin((double)m_zAngle); 
-			double sy = cos((double)m_zAngle); 
+	void FPSCameraController::UpdateRotation(D3DXVECTOR3 direction, double dt)
+	{		
+		POINT cursorPos; 
+		GetCursorPos(&cursorPos);
 		
-			m_camera->SetDirection(D3DXVECTOR3(sx, sy, sz)); 
-		}
+		int clientWidth = Framework::Window::Instance().GetClientWidth(); 
+		int clientHeight = Framework::Window::Instance().GetClientHeight(); 
+		
+		int dx = clientWidth / 2 - cursorPos.x;
+		int dy = clientHeight / 2 - cursorPos.y;
+		
+		float radius = std::sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
+		float yaw = std::atan2(direction.z, direction.x);
+		float pitch = std::asin(direction.y / radius);
 
-		SetCursorPos(m_screenWidth/2, m_screenHeight/2); 			
-		m_lastCursorPos = m_newCursorPos; 					
+		yaw += dx * C_SENSITIVITY * dt;
+		pitch += dy * C_SENSITIVITY * dt;
+					
+		if(pitch > M_PI_4) 
+			pitch = M_PI_4; 
+		if(pitch < -M_PI_4) 
+			pitch = -M_PI_4; 
+
+		float aux = radius * std::cos(pitch);
+		direction.x = aux * std::cos(yaw);
+		direction.y = radius * std::sin(pitch);
+		direction.z = aux * std::sin(yaw);
+					
+		m_camera->SetDirection(direction); 		
+
+		SetCursorPos(clientWidth/2, clientHeight/2); 			
 	}
 
 	const D3DXMATRIX& FPSCameraController::GetViewProjection() const
@@ -125,3 +112,6 @@ namespace Framework
 	}
 
 }
+
+
+

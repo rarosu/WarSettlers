@@ -3,7 +3,7 @@
 
 #define _USE_MATH_DEFINES
 
-#include <math.h>
+#include <cmath>
 #include "Window.hpp"
 #include "InputManager.hpp"
 #include "CameraController.hpp"
@@ -11,7 +11,7 @@
 
 namespace Framework
 {
-	class FPSCameraController : public CameraController, Framework::InputListener
+	class FPSCameraController : public CameraController, public Framework::InputListener
 	{
 	public:
 		FPSCameraController(); 
@@ -19,20 +19,16 @@ namespace Framework
 		~FPSCameraController(); 
 		void KeyPressed(int keyCode);
 		void KeyReleased(int keyCode);
-		void MouseMoved(unsigned int x, unsigned int y, int dx, int dy); 
 		
 		void Update(double dt); 
 		const D3DXMATRIX& GetViewProjection() const;
 	private:
-		void UpdateRotation(); 
+		void UpdateRotation(D3DXVECTOR3 direction, double dt); 
 		static const double C_VELOCITY;
+		static const double C_SENSITIVITY;
 		
-		int m_movingForward; 
-		int m_movingSideways; 
-		double m_xyAngle; 
-		double m_zAngle; 
-		POINT m_lastCursorPos; 
-		POINT m_newCursorPos; 
+		int m_movingForward;
+		int m_movingSideways;
 	};
 }
 
