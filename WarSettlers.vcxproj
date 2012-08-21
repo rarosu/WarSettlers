@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssetImporter.cpp" />
     <ClCompile Include="Code\Framework\CameraController.cpp" />
     <ClCompile Include="Code\Framework\Camera.cpp" />
     <ClCompile Include="Code\Framework\D3DWrapper.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Code\Framework\FPSCameraController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssetImporter.h" />
     <ClInclude Include="Code\Framework\CameraController.hpp" />
     <ClInclude Include="Code\Framework\Camera.hpp" />
     <ClInclude Include="Code\Framework\COMResource.hpp" />
@@ -182,6 +184,40 @@
     <ClInclude Include="Code\Framework\InputManager.hpp" />
     <ClInclude Include="Code\Framework\Window.hpp" />
     <ClInclude Include="Code\Framework\WinInclude.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\ai_assert.h" />
+    <ClInclude Include="Code\Libs\AssImp\anim.h" />
+    <ClInclude Include="Code\Libs\AssImp\camera.h" />
+    <ClInclude Include="Code\Libs\AssImp\cexport.h" />
+    <ClInclude Include="Code\Libs\AssImp\cfileio.h" />
+    <ClInclude Include="Code\Libs\AssImp\cimport.h" />
+    <ClInclude Include="Code\Libs\AssImp\color4.h" />
+    <ClInclude Include="Code\Libs\AssImp\Compiler\poppack1.h" />
+    <ClInclude Include="Code\Libs\AssImp\Compiler\pushpack1.h" />
+    <ClInclude Include="Code\Libs\AssImp\config.h" />
+    <ClInclude Include="Code\Libs\AssImp\DefaultLogger.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\defs.h" />
+    <ClInclude Include="Code\Libs\AssImp\Exporter.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\Importer.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\importerdesc.h" />
+    <ClInclude Include="Code\Libs\AssImp\IOStream.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\IOSystem.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\light.h" />
+    <ClInclude Include="Code\Libs\AssImp\Logger.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\LogStream.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\material.h" />
+    <ClInclude Include="Code\Libs\AssImp\matrix3x3.h" />
+    <ClInclude Include="Code\Libs\AssImp\matrix4x4.h" />
+    <ClInclude Include="Code\Libs\AssImp\mesh.h" />
+    <ClInclude Include="Code\Libs\AssImp\NullLogger.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\postprocess.h" />
+    <ClInclude Include="Code\Libs\AssImp\ProgressHandler.hpp" />
+    <ClInclude Include="Code\Libs\AssImp\quaternion.h" />
+    <ClInclude Include="Code\Libs\AssImp\scene.h" />
+    <ClInclude Include="Code\Libs\AssImp\texture.h" />
+    <ClInclude Include="Code\Libs\AssImp\types.h" />
+    <ClInclude Include="Code\Libs\AssImp\vector2.h" />
+    <ClInclude Include="Code\Libs\AssImp\vector3.h" />
+    <ClInclude Include="Code\Libs\AssImp\version.h" />
     <ClInclude Include="Code\Libs\Effects11\d3dx11dbg.h" />
     <ClInclude Include="Code\Libs\Effects11\d3dx11effect.h" />
     <ClInclude Include="Code\Libs\Effects11\d3dxGlobal.h" />
@@ -196,6 +232,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="Code\Libs\AssImp\color4.inl" />
+    <None Include="Code\Libs\AssImp\material.inl" />
+    <None Include="Code\Libs\AssImp\matrix3x3.inl" />
+    <None Include="Code\Libs\AssImp\matrix4x4.inl" />
+    <None Include="Code\Libs\AssImp\quaternion.inl" />
+    <None Include="Code\Libs\AssImp\vector2.inl" />
+    <None Include="Code\Libs\AssImp\vector3.inl" />
     <None Include="COPYING.txt" />
     <None Include="pull.sh" />
     <None Include="push.sh" />
