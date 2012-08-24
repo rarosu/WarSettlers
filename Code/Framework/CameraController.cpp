@@ -10,7 +10,7 @@ namespace Framework
 	CameraController::CameraController(Camera *camera, int screenWidth, int screenHeight)
 		: m_camera(camera)	
 	{
-		Framework::Window::Instance().AddEventListener(this); 
+		Framework::Window::Instance().AddEventListener(this); 		
 	}
 
 

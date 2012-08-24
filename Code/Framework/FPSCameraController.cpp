@@ -15,12 +15,14 @@ namespace Framework
 		, m_movingForward(0)
 		, m_movingSideways(0)		
 	{
-		Framework::InputManager::Instance().AddInputListener(this);			
+		Framework::InputManager::Instance().AddInputListener(this);		
+		ShowCursor(false); 
 	}
 	
 	FPSCameraController::~FPSCameraController()
 	{
 		Framework::InputManager::Instance().RemoveInputListener(this);		
+		ShowCursor(true); 
 	}
 
 	void FPSCameraController::KeyPressed(int keyCode)
@@ -102,7 +104,7 @@ namespace Framework
 					
 		m_camera->SetDirection(direction); 		
 
-		SetCursorPos(clientWidth/2, clientHeight/2); 			
+		SetCursorPos(clientWidth/2, clientHeight/2); 				
 	}
 
 	const D3DXMATRIX& FPSCameraController::GetViewProjection() const
