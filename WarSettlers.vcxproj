@@ -187,7 +187,7 @@
     <ClCompile Include="Code\Framework\FPSCameraController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Code\Framework\AssetImporter.h" />
+    <ClInclude Include="Code\Framework\AssetImporter.hpp" />
     <ClInclude Include="Code\Framework\CameraController.hpp" />
     <ClInclude Include="Code\Framework\Camera.hpp" />
     <ClInclude Include="Code\Framework\COMResource.hpp" />

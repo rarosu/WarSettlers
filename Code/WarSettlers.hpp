@@ -3,6 +3,7 @@
 
 #include <Framework\Game.hpp>
 #include "Framework\FPSCameraController.hpp"
+#include "Framework\AssetImporter.hpp"
 #include <Libs\Effects11\d3dx11effect.h>
 
 /**
@@ -69,6 +70,7 @@ private:
 
 	Framework::FPSCameraController m_fpsCameraController; 
 	Framework::Camera m_camera; 
+	Framework::AssetImporter m_assetImporter; 
 	
 
 	/**

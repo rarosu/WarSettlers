@@ -34,10 +34,13 @@ WarSettlers::WarSettlers(HINSTANCE instance, const Framework::Game::Description&
 	, m_indexCount(3)	
 	, m_camera(D3DXVECTOR3(0, 5, -10), D3DXVECTOR3(0, 0, 10), 0.1, 500.0, 45, (double)displayCapabilities.m_displayModes[0].m_width / (double)displayCapabilities.m_displayModes[0].m_height)
 	, m_fpsCameraController(&m_camera, displayCapabilities.m_displayModes[0].m_width, displayCapabilities.m_displayModes[0].m_height)
+	, m_assetImporter()
 {	
+	m_assetImporter.ImportAsset("Resources/Models/tank.dae", "RTSVehicles"); 	
+	SetCursorPos(displayCapabilities.m_displayModes[0].m_width/2, displayCapabilities.m_displayModes[0].m_height / 2); 
 	Framework::InputManager::Instance().AddInputListener(this);	
 	SetupBuffers();
-	SetupEffect();	
+	SetupEffect();		
 }
 
 WarSettlers::~WarSettlers() throw()
@@ -102,25 +105,21 @@ void WarSettlers::Render(double dt, double interpolation)
 */
 void WarSettlers::SetupBuffers()
 {
-	std::vector<WarSettlers::Vertex> vertices(m_vertexCount);
-	std::vector<unsigned int> indices(m_indexCount);
+		
+	std::vector<Framework::WSMesh>::iterator it = m_assetImporter.GetMeshes().begin()+1; 
+	m_vertexCount = it->positions.size(); 
+	int nIndices = it->indices.size(); 
+	
 
-	// Setup a list of all vertices in a triangle
-	vertices[0].m_position = D3DXVECTOR4(0.0f, 0.0f, 0.0f, 1.0f);
-	vertices[0].m_color = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-	
-	vertices[1].m_position = D3DXVECTOR4(20.0f, 0.0f, 0.0f, 1.0f);
-	vertices[1].m_color = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
-	
-	vertices[2].m_position = D3DXVECTOR4(20.0f, 0.0f, 20.0f, 1.0f);
-	vertices[2].m_color = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+	std::vector<WarSettlers::Vertex> vertices(m_vertexCount);	
+	for(int i=0; i<m_vertexCount; i++) 
+	{
+		float r = (float)rand();
+		r = r / (r + (float)rand()); 
+		vertices[i].m_position = it->positions[i]; 
+		vertices[i].m_color = D3DXCOLOR(r, r, r, 1.0f);
+	}
 
-	// Setup a list of the order the triangles should come in (not necessary in this case, but
-	// useful for not having to repeat vertices in a model).
-	indices[0] = 0;
-	indices[1] = 1;
-	indices[2] = 2;
-	
 
 	// Describe the vertex buffer
 	D3D11_BUFFER_DESC vertexBufferDesc;
@@ -146,14 +145,14 @@ void WarSettlers::SetupBuffers()
 	// Describe the index buffer
 	D3D11_BUFFER_DESC indexBufferDesc;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(unsigned int) * indices.size());
+	indexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(unsigned int) * it->indices.size());
 	indexBufferDesc.CPUAccessFlags = 0;
 	indexBufferDesc.MiscFlags = 0;
 	indexBufferDesc.StructureByteStride = 0;
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 
 	D3D11_SUBRESOURCE_DATA indexData;
-	indexData.pSysMem = &indices[0];
+	indexData.pSysMem = &it->indices[0];
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 

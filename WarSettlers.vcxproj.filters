@@ -75,7 +75,7 @@
     <ClInclude Include="Code\Libs\AssImp\version.h" />
     <ClInclude Include="Code\Libs\AssImp\Compiler\poppack1.h" />
     <ClInclude Include="Code\Libs\AssImp\Compiler\pushpack1.h" />
-    <ClInclude Include="Code\Framework\AssetImporter.h" />
+    <ClInclude Include="Code\Framework\AssetImporter.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
