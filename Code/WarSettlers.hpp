@@ -4,7 +4,9 @@
 #include <Framework\Game.hpp>
 #include "Framework\FPSCameraController.hpp"
 #include "Framework\AssetImporter.hpp"
+#include "Global.hpp"
 #include <Libs\Effects11\d3dx11effect.h>
+
 
 /**
 	This function will read configuration, enumerate display modes

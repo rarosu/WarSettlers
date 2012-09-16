@@ -185,6 +185,7 @@
     <ClCompile Include="Code\WarSettlers.cpp" />
     <ClCompile Include="Code\Framework\GameTimer.cpp" />
     <ClCompile Include="Code\Framework\FPSCameraController.cpp" />
+    <ClCompile Include="Code\Framework\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Framework\AssetImporter.hpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Code\Framework\InputManager.hpp" />
     <ClInclude Include="Code\Framework\Window.hpp" />
     <ClInclude Include="Code\Framework\WinInclude.hpp" />
+    <ClInclude Include="Code\Global.hpp" />
     <ClInclude Include="Code\Libs\AssImp\ai_assert.h" />
     <ClInclude Include="Code\Libs\AssImp\anim.h" />
     <ClInclude Include="Code\Libs\AssImp\camera.h" />
@@ -244,6 +246,7 @@
     <ClInclude Include="Code\WarSettlers.hpp" />
     <ClInclude Include="Code\Framework\GameTimer.hpp" />
     <ClInclude Include="Code\Framework\FPSCameraController.hpp" />
+    <ClInclude Include="Code\Framework\Entity.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

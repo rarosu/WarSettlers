@@ -36,7 +36,7 @@ WarSettlers::WarSettlers(HINSTANCE instance, const Framework::Game::Description&
 	, m_fpsCameraController(&m_camera, displayCapabilities.m_displayModes[0].m_width, displayCapabilities.m_displayModes[0].m_height)
 	, m_assetImporter()
 {	
-	m_assetImporter.ImportAsset("Resources/Models/tank.dae", "RTSVehicles"); 	
+	m_assetImporter.ImportMesh("Resources/Models/tank.dae", ASSET_RTSVEHICLES); 	
 	SetCursorPos(displayCapabilities.m_displayModes[0].m_width/2, displayCapabilities.m_displayModes[0].m_height / 2); 
 	Framework::InputManager::Instance().AddInputListener(this);	
 	SetupBuffers();
@@ -104,9 +104,8 @@ void WarSettlers::Render(double dt, double interpolation)
 	Testing
 */
 void WarSettlers::SetupBuffers()
-{
-		
-	std::vector<Framework::WSMesh>::iterator it = m_assetImporter.GetMeshes().begin()+1; 
+{		
+	std::vector<Framework::WSMesh>::iterator it = m_assetImporter.Instance().GetMeshes(ASSET_RTSVEHICLES).begin()+1; 
 	m_vertexCount = it->positions.size(); 
 	int nIndices = it->indices.size(); 
 	

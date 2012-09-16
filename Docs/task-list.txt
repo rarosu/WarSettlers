@@ -12,9 +12,6 @@ OPEN TASKS
 * Font & Text output
 	Creating a class that manages a font resource and has a way of drawing text to the screen.
 	
-* Assimp Integration [devcast]
-	Compile the Assimp library and add it to the project. Get the project to compile.
-
 * Entity [devcast]
 	An entity class for renderable objects. Contains a mesh (for now?). Later additions being materials (textures).
 	
@@ -22,6 +19,10 @@ OPEN TASKS
 	A scene manager, a tree with SceneNodes, that can be translated and rotated with a world matrix. Entities can be attached to a scene node, and a scene node "inherits" its parent's world matrix.
 	
 FINISHED TASKS
+
+* Assimp Integration [devcast] - done! Using the AssetImporter class it is possible to add meshes from files to a game-wide std::map that stores vectors of meshes based on string identifiers.
+	Compile the Assimp library and add it to the project. Get the project to compile.
+
 
 * Timer [devcast]
 	High precision timer, e.g. for measuring delta time

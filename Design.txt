@@ -1,0 +1,78 @@
+PROTOTYPE 1:
+
+Goals:
+* Create a GameMap (only a non-textured grid?)
+* Create a entity that can be controlled and moved around the map
+
+
+Structure:
+
+Model
+	ModelMap
+		ModelEntity
+Controller
+	Input from player
+	Model reference
+	View reference
+View
+	Model reference
+	ViewMap
+		ViewEntity
+			Mesh
+			Bounding box
+			World matrix
+			ModelEntity ID
+
+	 Controller	 
+	|			|
+	|			|
+Model --------- View
+
+
+Scenario:
+
+Player left clicks on the screen
+Controller handles mouse click and determines Screen-Space coordinates
+Controller queries View for Grid-Coordinates of mouse click
+Controller queries View for intersected entities and their respective objects in the model
+Controller queries Model for the entity intersected
+
+If no entity was intersected:
+	Signal model to clear selection
+Else
+	Query model if entity is selectable
+	If the entity is selectable:
+		Signal model to select entity
+	Else
+		Signal model to clear selection
+
+
+Left click event:
+	ScreenSpacePoint := Screen position of click
+	GridSpacePoint := View.GetGridPosition(ScreenSpacePoint)
+	ViewEntities := View.GetIntersectedEntities(ScreenSpacePoint)
+
+	if ViewEntities.IsEmpty:
+		Model.ClearSelection()
+	else:
+		foreach E in ViewEntities:
+			ModelEntity := Model.GetEntity(E.ID)
+			if ModelEntity.IsSelectable:
+				Model.Select(ModelEntity)
+			else:
+				Model.ClearSelection()
+
+Right click event:
+	ScreenSpacePoint := Screen position of click
+	GridSpacePoint := View.GetGridPosition(ScreenSpacePoint)
+	SelectedEntity := Model.GetSelectedEntity()
+
+	if SelectedEntity != NULL:
+		SelectedEntity.Move(GridSpacePoint)
+
+Create ModelEntity: 
+	Model creates ModelEntity
+	Model signals through ModelEventListener that entity has been created 
+	View listens to ModelEventListener EntityCreatedEvent and creates ViewEntity
+	View adds the provided ModelEntity-ID to newly created ViewEntity
+	

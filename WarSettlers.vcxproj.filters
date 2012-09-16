@@ -17,6 +17,7 @@
     <ClCompile Include="Code\Framework\CameraController.cpp" />
     <ClCompile Include="Code\Framework\FPSCameraController.cpp" />
     <ClCompile Include="Code\Framework\AssetImporter.cpp" />
+    <ClCompile Include="Code\Framework\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Framework\COMResource.hpp" />
@@ -76,6 +77,8 @@
     <ClInclude Include="Code\Libs\AssImp\Compiler\poppack1.h" />
     <ClInclude Include="Code\Libs\AssImp\Compiler\pushpack1.h" />
     <ClInclude Include="Code\Framework\AssetImporter.hpp" />
+    <ClInclude Include="Code\Framework\Entity.hpp" />
+    <ClInclude Include="Code\Global.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

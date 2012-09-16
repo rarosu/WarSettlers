@@ -2,6 +2,8 @@
 
 namespace Framework 
 {
+	
+
 	WSMesh::WSMesh()
 	{
 
@@ -18,10 +20,12 @@ namespace Framework
 
 	}
 
-	bool AssetImporter::ProcessMeshes(const aiScene* scene) 
+	bool AssetImporter::ProcessMeshes(const aiScene* scene, std::string assetName) 
 	{				
 		if(!scene->HasMeshes())
 			return false; 
+
+		std::vector<WSMesh> vecMeshes; 
 
 		int nMeshes = scene->mNumMeshes; 
 		aiMesh** meshes = scene->mMeshes; 
@@ -73,13 +77,15 @@ namespace Framework
 				}
 			}
 
-			m_meshes.push_back(wsMesh); 
+			vecMeshes.push_back(wsMesh); 
 		}
+
+		m_mMeshes.insert(std::pair<std::string, std::vector<WSMesh>>(assetName, vecMeshes)); 
 
 		return true; 
 	}
 
-	bool AssetImporter::ImportAsset(std::string fileName, std::string assetName)
+	bool AssetImporter::ImportMesh(std::string fileName, std::string meshName)
 	{
 		 Assimp::Importer importer;
 		 const aiScene* scene = importer.ReadFile(fileName, aiProcess_MakeLeftHanded); 
@@ -93,8 +99,15 @@ namespace Framework
 		 }
 		 else 
 		 {
-			 return ProcessMeshes(scene); 										 
+			 return ProcessMeshes(scene, meshName); 										 
 		 }
+	}
+
+	std::vector<WSMesh>& AssetImporter::GetMeshes(const std::string assetName) 
+	{
+		std::map<std::string, std::vector<WSMesh>>::iterator it = m_mMeshes.find(assetName); 
+
+		return it->second; 
 	}
 
 	

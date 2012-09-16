@@ -1,13 +1,14 @@
 #ifndef FRAMEWORK_ASSETIMPORTER_HPP
 #define FRAMEWORK_ASSETIMPORTER_HPP
 
-
 #include "Libs/AssImp/Importer.hpp"      
 #include "Libs/AssImp/scene.h"      
 #include "Libs/AssImp/postprocess.h"
 #include "Libs/r2tk/r2-exception.hpp"
+#include "Libs/r2tk/r2-singleton.hpp"
 #include "D3DInclude.hpp"
 #include <vector>
+#include <map>
 
 namespace Framework
 {
@@ -21,18 +22,18 @@ namespace Framework
 		WSMesh(); 
 	}; 
 
-	class AssetImporter 
+	class AssetImporter : public r2::Singleton<AssetImporter>
 	{
 	public:
 		AssetImporter();
 		~AssetImporter();
 
-		bool ImportAsset(std::string fileName, std::string assetName); 
-		std::vector<WSMesh>& GetMeshes() { return m_meshes; }
-	private: 
-		std::vector<WSMesh> m_meshes; 
+		bool ImportMesh(std::string fileName, std::string meshName); 		
+		std::vector<WSMesh>& GetMeshes(std::string assetName); 
+	private: 		
+		std::map<std::string, std::vector<WSMesh>> m_mMeshes; 
 
-		bool ProcessMeshes(const aiScene* scene); 
+		bool ProcessMeshes(const aiScene* scene, std::string assetName); 
 	};
 }
 #endif 
