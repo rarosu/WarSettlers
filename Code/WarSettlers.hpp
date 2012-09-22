@@ -4,7 +4,9 @@
 #include <Framework\Game.hpp>
 #include "Framework\FPSCameraController.hpp"
 #include "Framework\AssetImporter.hpp"
-#include "Global.hpp"
+#include "View\ViewMap.hpp"
+#include "Framework\Global.hpp"
+#include "WarsettlersGlobal.hpp"
 #include <Libs\Effects11\d3dx11effect.h>
 
 
@@ -51,11 +53,7 @@ private:
 		Testing
 		Need to wrap up this process in a class in someway.
 	*/
-	struct Vertex
-	{
-		D3DXVECTOR4 m_position;
-		D3DXCOLOR m_color;
-	};
+	
 
 	void SetupBuffers();
 	void SetupEffect();
@@ -74,6 +72,7 @@ private:
 	Framework::Camera m_camera; 
 	Framework::AssetImporter m_assetImporter; 
 	
+	View::ViewMap m_viewMap; 
 
 	/**
 		/Testing

@@ -39,6 +39,9 @@ namespace Framework
 		if(m_dt < 0) 
 			m_dt = 0; 
 
+		if(m_dt > 1.0) 
+			m_dt = 1.0; 
+
 		return(m_dt); 
 	}
 }

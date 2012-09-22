@@ -5,6 +5,9 @@
 	#define DEBUG_MODE
 #endif
 
+#include <D3D10_1.h>
+#include <D3DX10.h>
+
 namespace Framework
 {
 	/**
@@ -24,6 +27,14 @@ namespace Framework
 		delete [] memory;
 		memory = NULL;
 	}
+
+	struct Vertex
+	{
+		D3DXVECTOR4 m_position;
+		D3DXCOLOR m_color;
+
+		Vertex() { }; 
+	};
 }
 
 #endif

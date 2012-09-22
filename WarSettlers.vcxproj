@@ -201,7 +201,7 @@
     <ClInclude Include="Code\Framework\InputManager.hpp" />
     <ClInclude Include="Code\Framework\Window.hpp" />
     <ClInclude Include="Code\Framework\WinInclude.hpp" />
-    <ClInclude Include="Code\Global.hpp" />
+    <ClInclude Include="Code\WarsettlersGlobal.hpp" />
     <ClInclude Include="Code\Libs\AssImp\ai_assert.h" />
     <ClInclude Include="Code\Libs\AssImp\anim.h" />
     <ClInclude Include="Code\Libs\AssImp\camera.h" />

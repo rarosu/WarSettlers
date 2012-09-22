@@ -1,5 +1,5 @@
-#ifndef CODE_GLOBAL_HPP
-#define CODE_GLOBAL_HPP
+#ifndef WARSETTLERS_GLOBAL_HPP
+#define WARSETTLERS_GLOBAL_HPP
 
 static const std::string ASSET_RTSVEHICLES = "RTSVehicles"; 
 

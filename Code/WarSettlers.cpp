@@ -35,12 +35,13 @@ WarSettlers::WarSettlers(HINSTANCE instance, const Framework::Game::Description&
 	, m_camera(D3DXVECTOR3(0, 5, -10), D3DXVECTOR3(0, 0, 10), 0.1, 500.0, 45, (double)displayCapabilities.m_displayModes[0].m_width / (double)displayCapabilities.m_displayModes[0].m_height)
 	, m_fpsCameraController(&m_camera, displayCapabilities.m_displayModes[0].m_width, displayCapabilities.m_displayModes[0].m_height)
 	, m_assetImporter()
+	, m_viewMap(&GetD3D(), 50, 50)
 {	
 	m_assetImporter.ImportMesh("Resources/Models/tank.dae", ASSET_RTSVEHICLES); 	
 	SetCursorPos(displayCapabilities.m_displayModes[0].m_width/2, displayCapabilities.m_displayModes[0].m_height / 2); 
 	Framework::InputManager::Instance().AddInputListener(this);	
 	SetupBuffers();
-	SetupEffect();		
+	SetupEffect();
 }
 
 WarSettlers::~WarSettlers() throw()
@@ -80,10 +81,10 @@ void WarSettlers::Render(double dt, double interpolation)
 
 	// TODO: Remove ugly test code
 	unsigned int offset = 0;
-	unsigned int size = sizeof(Vertex);
+	unsigned int stride = sizeof(Framework::Vertex);
 	GetD3D().GetContext()->IASetInputLayout(m_inputLayout.Resource());
 	GetD3D().GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	GetD3D().GetContext()->IASetVertexBuffers(0, 1, &m_vertexBuffer.Resource(), &size, &offset);
+	GetD3D().GetContext()->IASetVertexBuffers(0, 1, &m_viewMap.GetVertexBuffer().Resource(), &stride, &offset);
 
 	D3DXMATRIX wvp;	
 	wvp = this->m_fpsCameraController.GetViewProjection(); 
@@ -94,7 +95,7 @@ void WarSettlers::Render(double dt, double interpolation)
 	{
 		m_effect->GetTechniqueByIndex(0)->GetPassByIndex(p)->Apply(0, GetD3D().GetContext().Resource());
 
-		GetD3D().GetContext()->Draw(m_vertexCount, 0);
+		GetD3D().GetContext()->Draw(m_viewMap.GetVertexCount(), 0);
 	}
 }
 
@@ -110,7 +111,7 @@ void WarSettlers::SetupBuffers()
 	int nIndices = it->indices.size(); 
 	
 
-	std::vector<WarSettlers::Vertex> vertices(m_vertexCount);	
+	std::vector<Framework::Vertex> vertices(m_vertexCount);	
 	for(int i=0; i<m_vertexCount; i++) 
 	{
 		float r = (float)rand();
@@ -125,7 +126,7 @@ void WarSettlers::SetupBuffers()
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(WarSettlers::Vertex) * vertices.size());
+	vertexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(Framework::Vertex) * vertices.size());
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
@@ -140,24 +141,6 @@ void WarSettlers::SetupBuffers()
 	if (FAILED(result))
 		throw DirectXErrorM(result, "Failed to create vertex buffer");
 
-
-	// Describe the index buffer
-	D3D11_BUFFER_DESC indexBufferDesc;
-	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(unsigned int) * it->indices.size());
-	indexBufferDesc.CPUAccessFlags = 0;
-	indexBufferDesc.MiscFlags = 0;
-	indexBufferDesc.StructureByteStride = 0;
-	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-
-	D3D11_SUBRESOURCE_DATA indexData;
-	indexData.pSysMem = &it->indices[0];
-	indexData.SysMemPitch = 0;
-	indexData.SysMemSlicePitch = 0;
-
-	result = GetD3D().GetDevice()->CreateBuffer(&indexBufferDesc, &indexData, &m_indexBuffer.Resource());
-	if (FAILED(result))
-		throw DirectXErrorM(result, "Failed to create index buffer");
 }
 
 void WarSettlers::SetupEffect()

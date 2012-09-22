@@ -2,14 +2,12 @@
 #define VIEW_ENTITY_HPP
 
 #include "Framework\AssetImporter.hpp"
-#include "Global.hpp"
 
 namespace View
 {
 
 	/* 
-	This class represents a renderable entity of the game. 
-	It contains reference to a mesh and one or more materials
+	This class represents a renderable entity of the game. 	
 	*/ 
 	class ViewEntity
 	{

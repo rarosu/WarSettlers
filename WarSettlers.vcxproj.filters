@@ -78,9 +78,9 @@
     <ClInclude Include="Code\Libs\AssImp\Compiler\poppack1.h" />
     <ClInclude Include="Code\Libs\AssImp\Compiler\pushpack1.h" />
     <ClInclude Include="Code\Framework\AssetImporter.hpp" />
-    <ClInclude Include="Code\Global.hpp" />
     <ClInclude Include="Code\View\ViewEntity.hpp" />
     <ClInclude Include="Code\View\ViewMap.hpp" />
+    <ClInclude Include="Code\WarsettlersGlobal.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
