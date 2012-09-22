@@ -4,6 +4,7 @@
 #include "ViewEntity.hpp"
 #include "Framework\Global.hpp"
 #include "Framework\D3DWrapper.hpp" 
+#include <Libs\Effects11\d3dx11effect.h>
 #include <vector>
 
 namespace View
@@ -18,6 +19,7 @@ namespace View
 		Framework::COMResource<ID3D11Buffer>& GetIndexBuffer() { return m_indexBuffer; }
 		Framework::COMResource<ID3D11Buffer>& GetVertexBuffer() { return m_vertexBuffer; }
 		int GetVertexCount() { return m_mapMesh.positions.size(); }
+		void Render(D3DXMATRIX vp, Framework::COMResource<ID3DX11Effect> *effect, Framework::COMResource<ID3D11InputLayout>* inputLayout, ID3DX11EffectMatrixVariable* variableWVP, D3DX11_TECHNIQUE_DESC techniqueDescription); 
 	private: 
 		void GenerateMap(); 
 		void CreateBuffers(); 

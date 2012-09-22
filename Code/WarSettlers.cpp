@@ -78,25 +78,11 @@ void WarSettlers::Update(double dt)
 void WarSettlers::Render(double dt, double interpolation)
 {
 	// TODO: Render HUD, debug output, etc.
-
-	// TODO: Remove ugly test code
-	unsigned int offset = 0;
-	unsigned int stride = sizeof(Framework::Vertex);
-	GetD3D().GetContext()->IASetInputLayout(m_inputLayout.Resource());
-	GetD3D().GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	GetD3D().GetContext()->IASetVertexBuffers(0, 1, &m_viewMap.GetVertexBuffer().Resource(), &stride, &offset);
-
-	D3DXMATRIX wvp;	
-	wvp = this->m_fpsCameraController.GetViewProjection(); 
-
-	m_variableWVP->SetMatrix((FLOAT*)wvp);
-
-	for (unsigned int p = 0; p < m_techniqueDescription.Passes; ++p)
-	{
-		m_effect->GetTechniqueByIndex(0)->GetPassByIndex(p)->Apply(0, GetD3D().GetContext().Resource());
-
-		GetD3D().GetContext()->Draw(m_viewMap.GetVertexCount(), 0);
-	}
+	
+	D3DXMATRIX vp;	
+	vp = this->m_fpsCameraController.GetViewProjection(); 
+	// TODO can we move some of these params to the object? 
+	m_viewMap.Render(vp, &m_effect, &m_inputLayout, m_variableWVP, m_techniqueDescription); 
 }
 
 

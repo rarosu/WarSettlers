@@ -27,6 +27,24 @@ namespace View
 	{
 	}
 
+	void ViewMap::Render(D3DXMATRIX vp, Framework::COMResource<ID3DX11Effect> *effect, Framework::COMResource<ID3D11InputLayout>* inputLayout, ID3DX11EffectMatrixVariable* variableWVP, D3DX11_TECHNIQUE_DESC techniqueDescription) 
+	{
+		unsigned int offset = 0;
+		unsigned int stride = sizeof(Framework::Vertex);
+		m_D3dwrapper->GetContext()->IASetInputLayout(inputLayout->Resource());
+		m_D3dwrapper->GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		m_D3dwrapper->GetContext()->IASetVertexBuffers(0, 1, &m_vertexBuffer.Resource(), &stride, &offset);
+		
+		variableWVP->SetMatrix((FLOAT*)vp);
+
+		for (unsigned int p = 0; p < techniqueDescription.Passes; ++p)
+		{
+			effect->Resource()->GetTechniqueByIndex(0)->GetPassByIndex(p)->Apply(0, m_D3dwrapper->GetContext().Resource());
+
+			m_D3dwrapper->GetContext()->Draw(GetVertexCount(), 0);
+		}
+	}
+
 	void ViewMap::GenerateMap()
 	{
 		int counter = 0; 
