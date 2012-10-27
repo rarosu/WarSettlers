@@ -4,6 +4,7 @@
 #include "ViewEntity.hpp"
 #include "Framework\Global.hpp"
 #include "Framework\D3DWrapper.hpp" 
+#include "WarsettlersGlobal.hpp"
 #include <Libs\Effects11\d3dx11effect.h>
 #include <vector>
 
@@ -13,13 +14,14 @@ namespace View
 	{
 	public:
 		ViewMap();
-		ViewMap(Framework::D3DWrapper* wrapper,  int width, int height);
+		ViewMap(Framework::D3DWrapper* wrapper,  Framework::AssetImporter* assetImporter,  int width, int height);
 		~ViewMap();
 
 		Framework::COMResource<ID3D11Buffer>& GetIndexBuffer() { return m_indexBuffer; }
 		Framework::COMResource<ID3D11Buffer>& GetVertexBuffer() { return m_vertexBuffer; }
 		int GetVertexCount() { return m_mapMesh.positions.size(); }
 		void Render(D3DXMATRIX vp, Framework::COMResource<ID3DX11Effect> *effect, Framework::COMResource<ID3D11InputLayout>* inputLayout, ID3DX11EffectMatrixVariable* variableWVP, D3DX11_TECHNIQUE_DESC techniqueDescription); 
+		void AddEntity(D3DXVECTOR3 position, std::string meshName); 
 	private: 
 		void GenerateMap(); 
 		void CreateBuffers(); 
@@ -32,6 +34,7 @@ namespace View
 
 		Framework::WSMesh m_mapMesh; 
 		Framework::D3DWrapper* m_D3dwrapper; 
+		Framework::AssetImporter* m_assetImporter; 
 
 		// vector of ViewEntities contained in this map. All rendable content is based on the ViewEntity.  
 		std::vector<ViewEntity> m_entities; 

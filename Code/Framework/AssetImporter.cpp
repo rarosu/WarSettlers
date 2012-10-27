@@ -14,6 +14,11 @@ namespace Framework
 
 	}
 
+	AssetImporter::AssetImporter(const Framework::AssetImporter &)
+	{
+
+	}
+
 
 	AssetImporter::~AssetImporter()
 	{
@@ -103,11 +108,11 @@ namespace Framework
 		 }
 	}
 
-	std::vector<WSMesh>& AssetImporter::GetMeshes(const std::string assetName) 
+	std::vector<WSMesh>* AssetImporter::GetMeshes(const std::string assetName) 
 	{
 		std::map<std::string, std::vector<WSMesh>>::iterator it = m_mMeshes.find(assetName); 
 
-		return it->second; 
+		return &it->second; 
 	}
 
 	

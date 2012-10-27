@@ -26,13 +26,13 @@ namespace Framework
 	{
 	public:
 		AssetImporter();
+		AssetImporter(const Framework::AssetImporter &); 
 		~AssetImporter();
 
 		bool ImportMesh(std::string fileName, std::string meshName); 		
-		std::vector<WSMesh>& GetMeshes(std::string assetName); 
-	private: 		
+		std::vector<WSMesh>* GetMeshes(std::string assetName); 
+	protected: 		
 		std::map<std::string, std::vector<WSMesh>> m_mMeshes; 
-
 		bool ProcessMeshes(const aiScene* scene, std::string assetName); 
 	};
 }

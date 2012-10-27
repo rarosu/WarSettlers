@@ -2,15 +2,19 @@
 
 namespace View 
 {
-	ViewMap::ViewMap(Framework::D3DWrapper* wrapper, int width, int height)
+	ViewMap::ViewMap(Framework::D3DWrapper* wrapper, Framework::AssetImporter* assetImporter, int width, int height)
 	{
 		m_D3dwrapper = wrapper; 
+		m_assetImporter = assetImporter; 
 		m_squareSize = 1.0;
 		m_width = width;
 		m_height = height;
 
 		GenerateMap(); 
 		CreateBuffers(); 
+		AddEntity(D3DXVECTOR3(0, 0, 0), ASSET_RTSVEHICLES); 
+		AddEntity(D3DXVECTOR3(20, 0, 10), ASSET_RTSVEHICLES); 
+		AddEntity(D3DXVECTOR3(50, 0, 50), ASSET_RTSVEHICLES); 
 	}
 
 	ViewMap::ViewMap()
@@ -27,8 +31,18 @@ namespace View
 	{
 	}
 
+	void ViewMap::AddEntity(D3DXVECTOR3 position, std::string meshName) 
+	{
+		if(!m_D3dwrapper) 
+			return; 
+
+		m_entities.push_back(ViewEntity(m_D3dwrapper, m_assetImporter, meshName, position)); 
+	}
+
 	void ViewMap::Render(D3DXMATRIX vp, Framework::COMResource<ID3DX11Effect> *effect, Framework::COMResource<ID3D11InputLayout>* inputLayout, ID3DX11EffectMatrixVariable* variableWVP, D3DX11_TECHNIQUE_DESC techniqueDescription) 
 	{
+		//TODO Culling here?
+
 		unsigned int offset = 0;
 		unsigned int stride = sizeof(Framework::Vertex);
 		m_D3dwrapper->GetContext()->IASetInputLayout(inputLayout->Resource());
@@ -42,6 +56,12 @@ namespace View
 			effect->Resource()->GetTechniqueByIndex(0)->GetPassByIndex(p)->Apply(0, m_D3dwrapper->GetContext().Resource());
 
 			m_D3dwrapper->GetContext()->Draw(GetVertexCount(), 0);
+		}
+		 
+
+		for(std::vector<ViewEntity>::iterator it = m_entities.begin(); it != m_entities.end(); it++) 
+		{
+			it->Render(vp, effect, inputLayout, variableWVP, techniqueDescription); 
 		}
 	}
 
