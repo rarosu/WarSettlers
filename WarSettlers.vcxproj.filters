@@ -19,6 +19,7 @@
     <ClCompile Include="Code\Framework\AssetImporter.cpp" />
     <ClCompile Include="Code\View\ViewEntity.cpp" />
     <ClCompile Include="Code\View\ViewMap.cpp" />
+    <ClCompile Include="Code\Model\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\Framework\COMResource.hpp" />
@@ -81,6 +82,9 @@
     <ClInclude Include="Code\View\ViewEntity.hpp" />
     <ClInclude Include="Code\View\ViewMap.hpp" />
     <ClInclude Include="Code\WarsettlersGlobal.hpp" />
+    <ClInclude Include="Code\Model\Model.hpp" />
+    <ClInclude Include="Code\Model\Entity.hpp" />
+    <ClInclude Include="Code\Model\Map.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

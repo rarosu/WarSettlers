@@ -1,6 +1,8 @@
 #ifndef MODEL_ENTITY_HPP
 #define MODEL_ENTITY_HPP
 
+#include <Framework\D3DInclude.hpp>
+
 namespace Model
 {
     struct Entity

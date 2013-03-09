@@ -181,6 +181,7 @@
     <ClCompile Include="Code\Libs\r2tk\r2-assert.cpp" />
     <ClCompile Include="Code\Libs\r2tk\r2-exception.cpp" />
     <ClCompile Include="Code\main.cpp" />
+    <ClCompile Include="Code\Model\Entity.cpp" />
     <ClCompile Include="Code\Utility\Logger.cpp" />
     <ClCompile Include="Code\WarSettlers.cpp" />
     <ClCompile Include="Code\Framework\GameTimer.cpp" />
@@ -201,6 +202,9 @@
     <ClInclude Include="Code\Framework\InputManager.hpp" />
     <ClInclude Include="Code\Framework\Window.hpp" />
     <ClInclude Include="Code\Framework\WinInclude.hpp" />
+    <ClInclude Include="Code\Model\Entity.hpp" />
+    <ClInclude Include="Code\Model\Map.hpp" />
+    <ClInclude Include="Code\Model\Model.hpp" />
     <ClInclude Include="Code\WarsettlersGlobal.hpp" />
     <ClInclude Include="Code\Libs\AssImp\ai_assert.h" />
     <ClInclude Include="Code\Libs\AssImp\anim.h" />
