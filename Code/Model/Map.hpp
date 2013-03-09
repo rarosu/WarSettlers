@@ -1,6 +1,8 @@
 #ifndef MODEL_MAP_HPP
 #define MODEL_MAP_HPP
 
+#include "Entity.hpp"
+
 namespace Model
 {
     class Map

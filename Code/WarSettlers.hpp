@@ -5,6 +5,7 @@
 #include "Framework\FPSCameraController.hpp"
 #include "Framework\AssetImporter.hpp"
 #include <Model\Map.hpp>
+#include <Model\Entity.hpp>
 #include "View\ViewMap.hpp"
 #include "Framework\Global.hpp"
 #include "WarsettlersGlobal.hpp"
