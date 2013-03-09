@@ -35,10 +35,20 @@ WarSettlers::WarSettlers(HINSTANCE instance, const Framework::Game::Description&
 	, m_camera(D3DXVECTOR3(0, 5, -10), D3DXVECTOR3(0, 0, 10), 0.1, 500.0, 45, (double)displayCapabilities.m_displayModes[0].m_width / (double)displayCapabilities.m_displayModes[0].m_height)
 	, m_fpsCameraController(&m_camera, displayCapabilities.m_displayModes[0].m_width, displayCapabilities.m_displayModes[0].m_height)
 	, m_assetImporter()	
-{		
+{
+    // Initialize Model
+    m_modelMap.AddEntity(Model::Entity(D3DXVECTOR3(0.0f, 0.0f, 0.0f)));
+    m_modelMap.AddEntity(Model::Entity(D3DXVECTOR3(30.0f, 0.0f, 4.0f)));
+    m_modelMap.AddEntity(Model::Entity(D3DXVECTOR3(-10.0f, 0.0f, 10.0f)));
+
+    // Initialize View
 	m_assetImporter.ImportMesh("Resources/Models/tank.dae", ASSET_RTSVEHICLES); 	
-	m_viewMap = View::ViewMap(&GetD3D(), &m_assetImporter,  50, 50); 
+	m_viewMap = View::ViewMap(&m_modelMap, &GetD3D(), &m_assetImporter,  50, 50);
+
+
+	// Do other stuff...
 	SetCursorPos(displayCapabilities.m_displayModes[0].m_width/2, displayCapabilities.m_displayModes[0].m_height / 2); 
+
 	Framework::InputManager::Instance().AddInputListener(this);	
 	SetupBuffers();
 	SetupEffect();

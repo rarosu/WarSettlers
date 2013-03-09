@@ -4,6 +4,7 @@
 #include <Framework\Game.hpp>
 #include "Framework\FPSCameraController.hpp"
 #include "Framework\AssetImporter.hpp"
+#include <Model\Map.hpp>
 #include "View\ViewMap.hpp"
 #include "Framework\Global.hpp"
 #include "WarsettlersGlobal.hpp"
@@ -73,6 +74,7 @@ private:
 	Framework::AssetImporter m_assetImporter; 
 	
 	View::ViewMap m_viewMap; 
+	Model::Map m_modelMap;
 
 	/**
 		/Testing

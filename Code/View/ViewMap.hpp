@@ -1,6 +1,7 @@
 #ifndef VIEW_MAP_HPP
 #define VIEW_MAP_HPP
 
+#include <Model\Map.hpp>
 #include "ViewEntity.hpp"
 #include "Framework\Global.hpp"
 #include "Framework\D3DWrapper.hpp" 
@@ -14,7 +15,7 @@ namespace View
 	{
 	public:
 		ViewMap();
-		ViewMap(Framework::D3DWrapper* wrapper,  Framework::AssetImporter* assetImporter,  int width, int height);
+		ViewMap(Model::Map* modelMap, Framework::D3DWrapper* wrapper,  Framework::AssetImporter* assetImporter,  int width, int height);
 		~ViewMap();
 
 		Framework::COMResource<ID3D11Buffer>& GetIndexBuffer() { return m_indexBuffer; }
@@ -34,7 +35,8 @@ namespace View
 
 		Framework::WSMesh m_mapMesh; 
 		Framework::D3DWrapper* m_D3dwrapper; 
-		Framework::AssetImporter* m_assetImporter; 
+		Framework::AssetImporter* m_assetImporter;
+		Model::Map* m_modelMap;
 
 		// vector of ViewEntities contained in this map. All rendable content is based on the ViewEntity.  
 		std::vector<ViewEntity> m_entities; 

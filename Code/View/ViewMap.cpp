@@ -2,19 +2,23 @@
 
 namespace View 
 {
-	ViewMap::ViewMap(Framework::D3DWrapper* wrapper, Framework::AssetImporter* assetImporter, int width, int height)
+	ViewMap::ViewMap(Model::Map* modelMap, Framework::D3DWrapper* wrapper, Framework::AssetImporter* assetImporter, int width, int height)
+	    : m_modelMap(modelMap)
 	{
 		m_D3dwrapper = wrapper; 
 		m_assetImporter = assetImporter; 
 		m_squareSize = 1.0;
 		m_width = width;
-		m_height = height;
+		m_height = height; 
 
 		GenerateMap(); 
-		CreateBuffers(); 
-		AddEntity(D3DXVECTOR3(0, 0, 0), ASSET_RTSVEHICLES); 
-		AddEntity(D3DXVECTOR3(20, 0, 10), ASSET_RTSVEHICLES); 
-		AddEntity(D3DXVECTOR3(50, 0, 50), ASSET_RTSVEHICLES); 
+		CreateBuffers();
+
+		std::map<int, Model::Entity>*& entityMap = m_modelMap->GetEntities();
+		for (std::map<int, Model::Entity>::iterator it = entityMap->begin(); it != entityMap->end(); it++)
+		{
+		    AddEntity(it->second.m_gridPosition, ASSET_RTSVEHICLES);
+		}
 	}
 
 	ViewMap::ViewMap()

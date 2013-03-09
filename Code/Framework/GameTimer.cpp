@@ -10,7 +10,7 @@ namespace Framework
 		m_frequency; 
 		
 		if(!QueryPerformanceFrequency(&m_frequency))
-			r2ExceptionRuntimeM("Unable to use hardware timer (QueryPerformanceFrequency)");  
+			throw r2ExceptionRuntimeM("Unable to use hardware timer (QueryPerformanceFrequency)");  
 	}
 
 
@@ -25,7 +25,7 @@ namespace Framework
 	double GameTimer::GetDt() 
 	{				
 		if(!QueryPerformanceCounter(&m_currentTicks)) 
-			r2ExceptionRuntimeM("Unable to use hardware timer (QueryPerformanceCounter)");  
+			throw r2ExceptionRuntimeM("Unable to use hardware timer (QueryPerformanceCounter)");  
 
 		if(m_currentTicks.QuadPart != m_lastTicks.QuadPart && m_frequency.QuadPart > 0) 
 		{
